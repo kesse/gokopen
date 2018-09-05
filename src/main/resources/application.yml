@@ -14,3 +14,7 @@ endpoints:
   enabled: false
   info.enabled: true
   health.enabled: true
+
+spring.mvc.view:
+  prefix: /WEB-INF/pages/
+  suffix: .jsp
