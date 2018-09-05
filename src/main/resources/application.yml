@@ -1,0 +1,16 @@
+spring.jpa.hibernate.ddl-auto: create
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/gokopen?useSSL=false
+  username: gokopen
+  password: gokopen
+  tomcat:
+    testWhileIdle: true
+    testOnBorrow: true
+    validationQuery: /* ping */ SELECT 1
+
+spring.jpa.properties.hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+# Disable default endpoints
+endpoints:
+  enabled: false
+  info.enabled: true
+  health.enabled: true

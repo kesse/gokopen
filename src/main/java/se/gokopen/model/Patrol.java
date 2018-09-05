@@ -33,7 +33,6 @@ import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "patrol")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Patrol implements Comparable<Patrol> {
     private Integer patrolId;
     private String externalId;
