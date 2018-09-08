@@ -23,7 +23,7 @@
 
 			<div class="text size-3">
 				<label for="j_username">Användarnamn:</label> <input type="text"
-					name="ssoId" id="username" placeholder="Ange användarnamn" required>
+					name="username" id="username" placeholder="Ange användarnamn" required>
 			</div>
 			<div class="text size-3">
 				<label for="j_password">Lösenord:</label> <input type='password'
