@@ -6,7 +6,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import se.gokopen.persistence.entity.PatrolEntity;
-import se.gokopen.persistence.entity.Score;
 import se.gokopen.persistence.entity.ScoreEntity;
 import se.gokopen.persistence.entity.StationEntity;
 

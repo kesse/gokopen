@@ -1,26 +1,26 @@
 package se.gokopen.service;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import se.gokopen.persistence.exception.PatrolNotFoundException;
-import se.gokopen.persistence.exception.PatrolNotSavedException;
+import se.gokopen.Application;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.ScoreEntity;
 import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes= Application.class, webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TestScoreValidation {
 
     private StationEntity station1;
@@ -37,11 +37,6 @@ public class TestScoreValidation {
     
     @Autowired
     private StationService stationService;
-    
-    @Before
-    public void setup() {
-               
-    }
 
     @Ignore
     @Test
@@ -52,7 +47,17 @@ public class TestScoreValidation {
         station2 = new StationEntity();
         
         patrol1.setPatrolName("TestPatrol1");
+        patrol1.setLeaderContactPhone("123");
+        patrol1.setLeaderContactMail("123@a.se");
+        patrol1.setLeaderContact("contact");
+        patrol1.setTroop("kår");
+
         patrol2.setPatrolName("TestPatrol2");
+        patrol2.setLeaderContactPhone("123");
+        patrol2.setLeaderContactMail("123@a.se");
+        patrol2.setLeaderContact("contact");
+        patrol2.setTroop("kår");
+
         patrolService.savePatrol(patrol1);
         patrolService.savePatrol(patrol2);
         
@@ -70,9 +75,9 @@ public class TestScoreValidation {
         score1.setStation(station1);
         score1.setScorePoint(10);
         
-        try{
+        try {
             scoreService.saveScore(score1);    
-        }catch(ScoreNotSavedException e){
+        } catch(ScoreNotSavedException e) {
             System.out.println("meddelande " + e.getErrorMsg());
         }
         
@@ -86,7 +91,6 @@ public class TestScoreValidation {
         try {
             scoreService.saveScore(score2);
         } catch (ScoreNotSavedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -107,15 +111,13 @@ public class TestScoreValidation {
         try {
             scoreService.deleteScore(score1);
             scoreService.deleteScore(score2);
-            
-            patrolService.deletePatrol(patrol1);
-            patrolService.deletePatrol(patrol2);
-            
+
             stationService.deleteStation(station1);
             stationService.deleteStation(station2);
             
+            patrolService.deletePatrol(patrol1);
+            patrolService.deletePatrol(patrol2);
         } catch (ScoreNotFoundException | PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

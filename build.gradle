@@ -34,8 +34,9 @@ dependencies {
 
 	compile('org.jsoup:jsoup:1.11.3')
 
-	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
+
+	testRuntime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 }
