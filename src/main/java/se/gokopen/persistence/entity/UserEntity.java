@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User {
+public class UserEntity {
     private Integer id;
     private String username;
     private String password;
@@ -18,7 +18,7 @@ public class User {
     private String role;
 
     
-    public User(){
+    public UserEntity(){
         
     }
     

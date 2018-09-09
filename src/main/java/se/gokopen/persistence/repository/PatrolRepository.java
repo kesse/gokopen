@@ -4,19 +4,19 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 
-public interface PatrolRepository  extends CrudRepository<Patrol, Integer> {
+public interface PatrolRepository  extends CrudRepository<PatrolEntity, Integer> {
 
-    List<Patrol> findAllByOrderByTrack();
+    List<PatrolEntity> findAllByOrderByTrack();
 
-    List<Patrol> findAllByOrderByStatus();
+    List<PatrolEntity> findAllByOrderByStatus();
 
-    List<Patrol> findAllByOrderByTroop();
+    List<PatrolEntity> findAllByOrderByTroop();
 
-    List<Patrol> findAllByTrack(Track track);
+    List<PatrolEntity> findAllByTrack(TrackEntity track);
 
-    List<Patrol> findAllByStartStation(Station station);
+    List<PatrolEntity> findAllByStartStation(StationEntity station);
 }

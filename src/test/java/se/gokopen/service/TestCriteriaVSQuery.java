@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.PatrolEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
@@ -24,10 +24,10 @@ public class TestCriteriaVSQuery {
     public void shouldReturnTheSameResults(){
         
         long startCriteria = System.currentTimeMillis();
-        List<Patrol> patrolsCriteria = patrolService.getAllPatrolsCriteria();
+        List<PatrolEntity> patrolsCriteria = patrolService.getAllPatrolsCriteria();
         long stopCriteria = System.currentTimeMillis();
         long startQuery = System.currentTimeMillis();
-        List<Patrol> patrolsQuery = patrolService.getAllPatrols();
+        List<PatrolEntity> patrolsQuery = patrolService.getAllPatrols();
         long stopQuery = System.currentTimeMillis();
         
         

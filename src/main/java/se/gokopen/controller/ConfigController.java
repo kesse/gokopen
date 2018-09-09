@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.persistence.entity.Config;
+import se.gokopen.persistence.entity.ConfigEntity;
 import se.gokopen.service.ConfigService;
 
 @RequestMapping("/admin/config")
@@ -26,14 +26,14 @@ public class ConfigController {
     
     @RequestMapping(method=RequestMethod.GET)
     public ModelAndView showConfig(){
-        Config config = configService.getCurrentConfig();
+        ConfigEntity config = configService.getCurrentConfig();
         ModelMap map = new ModelMap();
         map.put("config", config);
         return new ModelAndView("config",map);
     }
     
     @RequestMapping(method=RequestMethod.POST)
-    public String save(@Valid Config config, BindingResult errors, ModelMap model) throws ParseException{
+    public String save(@Valid ConfigEntity config, BindingResult errors, ModelMap model) throws ParseException{
 
         if(errors.hasErrors()) {
             model.addAttribute("errormsg","Det är något som inte är ifyllt korrekt. Kolla datumet.");

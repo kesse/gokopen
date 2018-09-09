@@ -2,7 +2,7 @@ package se.gokopen.controller;
 
 import java.beans.PropertyEditorSupport;
 import se.gokopen.persistence.exception.StationNotFoundException;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.service.StationService;
 
 public class StationEditor extends PropertyEditorSupport {
@@ -16,7 +16,7 @@ public class StationEditor extends PropertyEditorSupport {
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Station station = null;
+		StationEntity station = null;
 		try {
 			station = stationService.getStationById(Integer.parseInt(text));
 		} catch (StationNotFoundException e) {
@@ -28,7 +28,7 @@ public class StationEditor extends PropertyEditorSupport {
 	
 	 @Override
 	    public String getAsText() {
-	        Station station = (Station) getValue();
+	        StationEntity station = (StationEntity) getValue();
 	        if (station == null) {
 	            return null;
 	        } else {

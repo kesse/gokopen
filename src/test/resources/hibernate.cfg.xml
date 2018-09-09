@@ -3,11 +3,11 @@
  
 <hibernate-configuration>
     <session-factory>
-        <mapping class="se.gokopen.persistence.entity.Patrol" />
-        <mapping class="se.gokopen.persistence.entity.Score" />
-        <mapping class="se.gokopen.persistence.entity.Station" />
-        <mapping class="se.gokopen.persistence.entity.Track" />
-        <mapping class="se.gokopen.persistence.entity.Config"/>
-        <mapping class="se.gokopen.persistence.entity.User"/>
+        <mapping class="se.gokopen.persistence.entity.PatrolEntity" />
+        <mapping class="se.gokopen.persistence.entity.ScoreEntity" />
+        <mapping class="se.gokopen.persistence.entity.StationEntity" />
+        <mapping class="se.gokopen.persistence.entity.TrackEntity" />
+        <mapping class="se.gokopen.persistence.entity.ConfigEntity"/>
+        <mapping class="se.gokopen.persistence.entity.UserEntity"/>
     </session-factory>	
 </hibernate-configuration>

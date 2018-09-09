@@ -2,17 +2,17 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.persistence.exception.TrackNotFoundException;
 
 public interface TrackService {
-	void saveTrack(Track track);
+	void saveTrack(TrackEntity track);
 
-	List<Track> getAllTracks();
+	List<TrackEntity> getAllTracks();
 
-	void deleteTrack(Track track);
+	void deleteTrack(TrackEntity track);
 
 	void deleteTrackById(Integer id);
 
-	Track getTrackById(Integer id) throws TrackNotFoundException;
+	TrackEntity getTrackById(Integer id) throws TrackNotFoundException;
 }

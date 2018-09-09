@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
-public interface ScoreRepository extends CrudRepository<Score, Integer> {
+public interface ScoreRepository extends CrudRepository<ScoreEntity, Integer> {
 
 
-    List<Score> findAllByStation(Station station);
+    List<ScoreEntity> findAllByStation(StationEntity station);
 
-    List<Score> findAllByPatrol(Patrol patrol);
+    List<ScoreEntity> findAllByPatrol(PatrolEntity patrol);
 
-    Score findByPatrolAndStation(Patrol patrol, Station station);
+    ScoreEntity findByPatrolAndStation(PatrolEntity patrol, StationEntity station);
 }

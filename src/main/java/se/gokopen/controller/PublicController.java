@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.gokopen.persistence.exception.TrackNotFoundException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.TrackService;
@@ -41,7 +41,7 @@ public class PublicController {
     @RequestMapping(value="/bytrack/{id}")
     public ModelAndView startPatrolsByTrack(@PathVariable String id,HttpServletRequest request){
         
-        Track track = null;
+        TrackEntity track = null;
         try {
             track = trackService.getTrackById(Integer.parseInt(id));
         } catch (NumberFormatException e) {
@@ -54,7 +54,7 @@ public class PublicController {
         request.setAttribute("selectedTrack", track.getTrackName());
         request.setAttribute("config", configService.getCurrentConfig());
         request.setAttribute("tracks", trackService.getAllTracks());
-        List<Patrol> patrols = patrolService.getAllPatrolsByTrack(track);
+        List<PatrolEntity> patrols = patrolService.getAllPatrolsByTrack(track);
         return new ModelAndView("publicviewresult","patrols",patrols);
     }
 

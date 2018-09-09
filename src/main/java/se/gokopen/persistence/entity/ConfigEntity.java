@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="config")
-public class Config {
+public class ConfigEntity {
     private Integer id;
     private String name;
     private Boolean allowPublicResult;
@@ -24,7 +24,7 @@ public class Config {
     private String confirmMessage;
     private Boolean allowPublicRegistration;
 
-    public Config(){
+    public ConfigEntity(){
         
     }
 

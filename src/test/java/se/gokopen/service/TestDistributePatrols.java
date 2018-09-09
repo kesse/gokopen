@@ -8,36 +8,36 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
 
 public class TestDistributePatrols {
 	private static final String KONTROLL1_NAME = "Kontroll 1";
 	private static final String KONTROLL2_NAME = "Kontroll 2";
 	private static final String KONTROLL3_NAME = "Kontroll 3";
-	List<Patrol> patrols = new ArrayList<Patrol>();
-	Patrol patrol1;
-	Patrol patrol2;
-	Patrol patrol3;
-	Patrol patrol4;
-	Patrol patrol5;
+	List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
+	PatrolEntity patrol1;
+	PatrolEntity patrol2;
+	PatrolEntity patrol3;
+	PatrolEntity patrol4;
+	PatrolEntity patrol5;
 	
-	List<Station> stations = new ArrayList<Station>();
-	Station station1;
-	Station station2;
-	Station station3;
-	Station station4;
+	List<StationEntity> stations = new ArrayList<StationEntity>();
+	StationEntity station1;
+	StationEntity station2;
+	StationEntity station3;
+	StationEntity station4;
 	
 	@Before
 	public void init(){
-		patrol1 = new Patrol();
+		patrol1 = new PatrolEntity();
 		patrol1.setPatrolName("Patrull 1");
-		patrol2 = new Patrol();
+		patrol2 = new PatrolEntity();
 		patrol2.setPatrolName("Patrull 2");
-		patrol3 = new Patrol();
+		patrol3 = new PatrolEntity();
 		patrol3.setPatrolName("Patrull 3");
-		patrol4 = new Patrol();
+		patrol4 = new PatrolEntity();
 		patrol4.setPatrolName("Patrull 4");
 		
 		patrols.add(patrol1);
@@ -50,7 +50,7 @@ public class TestDistributePatrols {
 	
 	@Test
 	public void saveStartStation(){
-	    station1 = new Station();
+	    station1 = new StationEntity();
         station1.setStationName(KONTROLL1_NAME);
         station1.setStationNumber(1);
 		patrol1.setStartStation(station1);
@@ -59,11 +59,11 @@ public class TestDistributePatrols {
 	
 	@Test
 	public void shouldDistributePatrolsOnStationsEvenly(){
-	    station1 = new Station();
+	    station1 = new StationEntity();
         station1.setStationName(KONTROLL1_NAME);
         station1.setStationNumber(1);
         
-        station2 = new Station();
+        station2 = new StationEntity();
         station2.setStationName(KONTROLL2_NAME);
         station2.setStationNumber(2);
         
@@ -78,17 +78,17 @@ public class TestDistributePatrols {
 
 	@Test
 	public void shouldDistributePatrolsOnStationsOnOddNumberOfStations(){
-	    station1 = new Station();
+	    station1 = new StationEntity();
         station1.setStationName(KONTROLL1_NAME);
         station1.setStationNumber(1);
         
-        station2 = new Station();
+        station2 = new StationEntity();
         station2.setStationName(KONTROLL2_NAME);
         station2.setStationNumber(2);
         
         stations.add(station1);
         stations.add(station2);
-		station3 = new Station();
+		station3 = new StationEntity();
 		station3.setStationName(KONTROLL3_NAME);
 		station3.setStationNumber(3);
 		stations.add(station3);

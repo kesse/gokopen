@@ -4,28 +4,28 @@ import java.util.List;
 
 import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.PatrolNotSavedException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 
 public interface PatrolService {
 
-	 void savePatrol(Patrol patrol) throws PatrolNotSavedException;
-	 void saveAllpatrols(List<Patrol> patrols) throws PatrolNotSavedException;
-	 List<Patrol> getAllPatrols();
-	 void deletePatrol(Patrol patrol) throws PatrolNotFoundException;
+	 void savePatrol(PatrolEntity patrol) throws PatrolNotSavedException;
+	 void saveAllpatrols(List<PatrolEntity> patrols) throws PatrolNotSavedException;
+	 List<PatrolEntity> getAllPatrols();
+	 void deletePatrol(PatrolEntity patrol) throws PatrolNotFoundException;
 	 void deletePatrolById(Integer id) throws PatrolNotFoundException;
-	 Patrol getPatrolById(Integer id) throws PatrolNotFoundException;
-	 List<Patrol> getAllPatrolsByTrack(Track track);
-	 List<Patrol> getAllPatrolsLeftOnStation(Integer stationId);
-	 List<Patrol> getAllPatrolsSortedByStatus();
-	 List<Patrol> getAllPatrolsSortedByTroop();
-	 List<Patrol> getAllPatrolsSortedByNumberOfStations();
-     List<Patrol> getAllPatrolsSortedByTrack();
-     List<Patrol> getAllPatrolsSortedByScore();
-     List<Patrol> getAllActivePatrolsLeftOnStation(Integer stationId);
-     List<Patrol> getActiveAndWaitingPatolsFromList(List<Patrol> patrols);
-     List<Patrol> getAllPatrolsCriteria();
-	 List<Patrol> getAllPatrolsByStartStation(Station station);
+	 PatrolEntity getPatrolById(Integer id) throws PatrolNotFoundException;
+	 List<PatrolEntity> getAllPatrolsByTrack(TrackEntity track);
+	 List<PatrolEntity> getAllPatrolsLeftOnStation(Integer stationId);
+	 List<PatrolEntity> getAllPatrolsSortedByStatus();
+	 List<PatrolEntity> getAllPatrolsSortedByTroop();
+	 List<PatrolEntity> getAllPatrolsSortedByNumberOfStations();
+     List<PatrolEntity> getAllPatrolsSortedByTrack();
+     List<PatrolEntity> getAllPatrolsSortedByScore();
+     List<PatrolEntity> getAllActivePatrolsLeftOnStation(Integer stationId);
+     List<PatrolEntity> getActiveAndWaitingPatolsFromList(List<PatrolEntity> patrols);
+     List<PatrolEntity> getAllPatrolsCriteria();
+	 List<PatrolEntity> getAllPatrolsByStartStation(StationEntity station);
 }
 

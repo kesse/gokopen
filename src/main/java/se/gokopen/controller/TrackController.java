@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.service.TrackService;
 
@@ -25,17 +25,17 @@ public class TrackController {
 	private TrackService trackService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ModelAndView save(Track track,BindingResult errors, HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView save(TrackEntity track, BindingResult errors, HttpServletRequest request, HttpServletResponse response){
 		trackService.saveTrack(track);
 
 		//Lista på tracks
-		List<Track> tracks = trackService.getAllTracks();
+		List<TrackEntity> tracks = trackService.getAllTracks();
 		return new ModelAndView("tracklist","tracks",tracks);
 	}
 	
 	@RequestMapping(value="/newtrack",method=RequestMethod.GET)
 	public ModelAndView newTrack(){
-		Track track = new Track();
+		TrackEntity track = new TrackEntity();
 		ModelMap map = new ModelMap();
 		map.put("track", track);
 		return new ModelAndView("track",map);
@@ -44,13 +44,13 @@ public class TrackController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listAllTracks(){
 		//Return to list of existing tracks
-		List<Track> tracks = trackService.getAllTracks();
+		List<TrackEntity> tracks = trackService.getAllTracks();
 		return new ModelAndView("tracklist","tracks",tracks);
 	}
 
 	@RequestMapping(value="/edit/{id}")
 	public ModelAndView editTrack(@PathVariable String id, HttpServletRequest request){
-		Track track = null;
+		TrackEntity track = null;
 		try {
 			track = trackService.getTrackById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -72,7 +72,7 @@ public class TrackController {
 			e.printStackTrace();
 		}
 		
-		List<Track> tracks = trackService.getAllTracks();
+		List<TrackEntity> tracks = trackService.getAllTracks();
 		return new ModelAndView("tracklist","tracks",tracks);
 	}
 	

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.gokopen.persistence.exception.TrackNotFoundException;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.persistence.repository.TrackRepository;
 
 @Service
@@ -20,13 +20,13 @@ public class TrackServiceImpl implements TrackService {
 	
 	@Override
 	@Transactional
-	public void saveTrack(Track track) {
+	public void saveTrack(TrackEntity track) {
 		trackRepository.save(track);
 	}
 
 	@Override
 	@Transactional
-	public List<Track> getAllTracks() {
+	public List<TrackEntity> getAllTracks() {
 
 		return StreamSupport.stream(trackRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
@@ -34,7 +34,7 @@ public class TrackServiceImpl implements TrackService {
 
 	@Override
 	@Transactional
-	public void deleteTrack(Track track) {
+	public void deleteTrack(TrackEntity track) {
 		trackRepository.delete(track);
 	}
 
@@ -46,9 +46,9 @@ public class TrackServiceImpl implements TrackService {
 
 	@Override
 	@Transactional
-	public Track getTrackById(Integer id) throws TrackNotFoundException {
+	public TrackEntity getTrackById(Integer id) throws TrackNotFoundException {
 
-		Track track = trackRepository.findOne(id);
+		TrackEntity track = trackRepository.findOne(id);
 
 		if (track == null) {
 			throw new TrackNotFoundException("Hittar inte spåret med id: " + id);

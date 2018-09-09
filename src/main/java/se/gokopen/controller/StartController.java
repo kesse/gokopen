@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import se.gokopen.persistence.entity.Config;
+import se.gokopen.persistence.entity.ConfigEntity;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 
@@ -25,7 +25,7 @@ public class StartController {
     private PatrolService patrolService;
     
     @ModelAttribute("config")
-    public Config loadConfig() {
+    public ConfigEntity loadConfig() {
         return configService.getCurrentConfig();
     }
     

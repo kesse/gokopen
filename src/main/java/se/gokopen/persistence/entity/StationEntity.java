@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="station")
-public class Station {
+public class StationEntity {
 	private Integer stationId;
 	private int stationNumber;
 	private String stationName;
@@ -24,7 +24,7 @@ public class Station {
 	private String stationUser;
 	private Boolean waypoint = false; 
 	
-	public Station(){
+	public StationEntity(){
 		
 	}
 

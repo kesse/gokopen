@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.entity.User;
+import se.gokopen.persistence.entity.UserEntity;
 import se.gokopen.persistence.exception.UserNotFoundException;
 import se.gokopen.persistence.repository.UserRepository;
 
@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     
     @Override
     @Transactional
-    public User getUser(String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserEntity getUser(String username) throws UserNotFoundException {
+        UserEntity user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UserNotFoundException("Hittar inte användaren med användarnamnet " + username);
@@ -29,31 +29,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(UserEntity user) {
         userRepository.delete(user);
     }
 
     @Override
     public void deleteUserByUsername(String username) throws UserNotFoundException {
-        User delUser = getUser(username);
+        UserEntity delUser = getUser(username);
         deleteUser(delUser);
     }
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(UserEntity user) {
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAllByOrderByUsername();
     }
 
     @Override
     @Transactional
-    public User getUserById(Integer id) throws UserNotFoundException {
-        User user = userRepository.findOne(id);
+    public UserEntity getUserById(Integer id) throws UserNotFoundException {
+        UserEntity user = userRepository.findOne(id);
 
         if (user == null) {
             throw new UserNotFoundException("Hittar inte användaren med id "+ id);

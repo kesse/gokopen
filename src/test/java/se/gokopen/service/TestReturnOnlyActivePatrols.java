@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.model.Status;
 
 public class TestReturnOnlyActivePatrols {
@@ -16,17 +16,17 @@ public class TestReturnOnlyActivePatrols {
     //TODO funktionen är ändrad till att faktiskt ta med patruller som kommit i mål. Testerna borde ändras för att reflektera detta bättre än att bara ändra själva equalTo
     @Test
     public void shouldReturnOnlyActivePatrolsFromList(){
-        Patrol patrol1 = new Patrol();
-        Patrol patrol2 = new Patrol();
-        Patrol patrol3 = new Patrol();
-        Patrol patrol4 = new Patrol();
+        PatrolEntity patrol1 = new PatrolEntity();
+        PatrolEntity patrol2 = new PatrolEntity();
+        PatrolEntity patrol3 = new PatrolEntity();
+        PatrolEntity patrol4 = new PatrolEntity();
         
         patrol1.setStatus(Status.ACTIVE);
         patrol2.setStatus(Status.FINISHED);
         patrol3.setStatus(Status.REGISTERED);
         patrol4.setStatus(Status.RESIGNED);
         
-        List<Patrol> patrols = new ArrayList<Patrol>();
+        List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
         patrols.add(patrol1);
         patrols.add(patrol2);
         patrols.add(patrol3);
@@ -34,24 +34,24 @@ public class TestReturnOnlyActivePatrols {
         
         PatrolService patrolService = new PatrolServiceImpl();
         
-        List<Patrol> onlyActiveAndWaitingPatrols = patrolService.getActiveAndWaitingPatolsFromList(patrols);
+        List<PatrolEntity> onlyActiveAndWaitingPatrols = patrolService.getActiveAndWaitingPatolsFromList(patrols);
         assertThat(onlyActiveAndWaitingPatrols.size(),is(equalTo(3)));
         
     }
 
     @Test
     public void shouldReturnOnlyActivePatrolsFromListAndWorkWithNullStatus(){
-        Patrol patrol1 = new Patrol();
-        Patrol patrol2 = new Patrol();
-        Patrol patrol3 = new Patrol();
-        Patrol patrol4 = new Patrol();
+        PatrolEntity patrol1 = new PatrolEntity();
+        PatrolEntity patrol2 = new PatrolEntity();
+        PatrolEntity patrol3 = new PatrolEntity();
+        PatrolEntity patrol4 = new PatrolEntity();
         
         patrol1.setStatus(Status.ACTIVE);
         patrol2.setStatus(Status.FINISHED);
         patrol3.setStatus(Status.REGISTERED);
         
         
-        List<Patrol> patrols = new ArrayList<Patrol>();
+        List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
         patrols.add(patrol1);
         patrols.add(patrol2);
         patrols.add(patrol3);
@@ -59,7 +59,7 @@ public class TestReturnOnlyActivePatrols {
         
         PatrolService patrolService = new PatrolServiceImpl();
         
-        List<Patrol> onlyActiveAndWaitingPatrols = patrolService.getActiveAndWaitingPatolsFromList(patrols);
+        List<PatrolEntity> onlyActiveAndWaitingPatrols = patrolService.getActiveAndWaitingPatolsFromList(patrols);
         assertThat(onlyActiveAndWaitingPatrols.size(),is(equalTo(3)));
         
     }

@@ -10,9 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.PatrolNotSavedException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 
@@ -23,10 +23,10 @@ import static org.junit.Assert.assertNull;
 @ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
 public class TestScoreValidation {
 
-    private Station station1;
-    private Station station2;
-    private Patrol patrol1;
-    private Patrol patrol2;
+    private StationEntity station1;
+    private StationEntity station2;
+    private PatrolEntity patrol1;
+    private PatrolEntity patrol2;
     
 
     @Autowired
@@ -46,10 +46,10 @@ public class TestScoreValidation {
     @Ignore
     @Test
     public void shouldNotSaveIfScoreAlreadySaved() throws PatrolNotSavedException {
-        patrol1 = new Patrol();
-        patrol2 = new Patrol();
-        station1 = new Station();
-        station2 = new Station();
+        patrol1 = new PatrolEntity();
+        patrol2 = new PatrolEntity();
+        station1 = new StationEntity();
+        station2 = new StationEntity();
         
         patrol1.setPatrolName("TestPatrol1");
         patrol2.setPatrolName("TestPatrol2");
@@ -65,7 +65,7 @@ public class TestScoreValidation {
         
         stationService.saveStation(station2);
         
-        Score score1 = new Score();
+        ScoreEntity score1 = new ScoreEntity();
         score1.setPatrol(patrol1);
         score1.setStation(station1);
         score1.setScorePoint(10);
@@ -79,7 +79,7 @@ public class TestScoreValidation {
         
         assertNotNull(score1.getScoreId());
         
-        Score score2 = new Score();
+        ScoreEntity score2 = new ScoreEntity();
         score2.setPatrol(patrol2);
         score2.setStation(station1);
         score2.setScorePoint(8);
@@ -92,7 +92,7 @@ public class TestScoreValidation {
         
         assertNotNull(score2.getScoreId());
         
-        Score score3 = new Score();
+        ScoreEntity score3 = new ScoreEntity();
         score3.setPatrol(patrol2);
         score3.setStation(station1);
         score3.setScorePoint(9);

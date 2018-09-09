@@ -10,12 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="track")
-public class Track {
+public class TrackEntity {
 	private Integer trackId;
 	private String trackName;
 	
 	
-	public Track(){
+	public TrackEntity(){
 		
 	}
 
@@ -55,7 +55,7 @@ public class Track {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Track other = (Track) obj;
+		TrackEntity other = (TrackEntity) obj;
 		if (trackId != other.trackId)
 			return false;
 		return true;

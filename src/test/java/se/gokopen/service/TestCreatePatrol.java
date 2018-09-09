@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.gokopen.model.Status;
-import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.PatrolNotSavedException;
 
@@ -27,7 +27,7 @@ public class TestCreatePatrol {
     @Ignore
     @Test
     public void shouldCreatePatrolInDatabase() throws PatrolNotSavedException, PatrolNotFoundException{
-        Patrol patrol = new Patrol();
+        PatrolEntity patrol = new PatrolEntity();
         patrol.setPatrolName("Test from junit");
         patrol.setNote("Just a test from automated testing. Should not be here - remove if you see");
         patrol.setStatus(Status.REGISTERED);

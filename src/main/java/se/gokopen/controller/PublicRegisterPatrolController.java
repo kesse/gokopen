@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.gokopen.persistence.exception.PatrolNotSavedException;
-import se.gokopen.persistence.entity.Config;
-import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.ConfigEntity;
+import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.model.Status;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.TrackService;
@@ -41,16 +41,16 @@ public class PublicRegisterPatrolController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Track.class, new TrackEditor(this.trackService));
+        binder.registerCustomEditor(TrackEntity.class, new TrackEditor(this.trackService));
     }
     
     @ModelAttribute("tracks")
-    public List<Track> populateTracks() {
+    public List<TrackEntity> populateTracks() {
         return trackService.getAllTracks();
     }
     
     @ModelAttribute("config")
-    public Config loadConfiguration() {
+    public ConfigEntity loadConfiguration() {
         return configService.getCurrentConfig();
     }
 
@@ -59,7 +59,7 @@ public class PublicRegisterPatrolController {
         int noOfPatrols = patrolService.getAllPatrols().size();
         if(RegistrationChecker.isOpenForRegistration(loadConfiguration(), noOfPatrols)) {
             ModelMap map = new ModelMap();
-            map.put("patrol", new Patrol());
+            map.put("patrol", new PatrolEntity());
             map.put("registeredpatrols", noOfPatrols);
             return new ModelAndView("publicregisterpatrol",map);    
         }else {
@@ -69,7 +69,7 @@ public class PublicRegisterPatrolController {
 
     
     @PostMapping
-    public String savePatrol(@Valid Patrol patrol, BindingResult bindingResult, ModelMap model) {
+    public String savePatrol(@Valid PatrolEntity patrol, BindingResult bindingResult, ModelMap model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("errormsg","Ops, du missade visst att fylla i viktig information.");
             int noOfPatrols = patrolService.getAllPatrols().size();

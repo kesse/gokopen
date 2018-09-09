@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.gokopen.persistence.exception.StationNotFoundException;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.repository.StationRepository;
 
 @Service
@@ -20,13 +20,13 @@ public class StationServiceImpl implements StationService {
 
 	@Override
 	@Transactional
-	public void saveStation(Station station) {
+	public void saveStation(StationEntity station) {
 		stationRepository.save(station);
 	}
 
 	@Override
 	@Transactional
-	public List<Station> getAllStations() {
+	public List<StationEntity> getAllStations() {
 
 		return StreamSupport.stream(stationRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
@@ -34,7 +34,7 @@ public class StationServiceImpl implements StationService {
 
 	@Override
 	@Transactional
-	public void deleteStation(Station station) {
+	public void deleteStation(StationEntity station) {
 		stationRepository.delete(station);
 	}
 
@@ -46,9 +46,9 @@ public class StationServiceImpl implements StationService {
 
 	@Override
 	@Transactional
-	public Station getStationById(Integer id) throws StationNotFoundException {
+	public StationEntity getStationById(Integer id) throws StationNotFoundException {
 
-		Station station = stationRepository.findOne(id);
+		StationEntity station = stationRepository.findOne(id);
 
 		if (station == null) {
 			throw new StationNotFoundException("Hittar inte kontrollen med id: " + id);

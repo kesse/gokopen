@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.persistence.entity.User;
+import se.gokopen.persistence.entity.UserEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
@@ -23,7 +23,7 @@ public class TestUserService {
     @Ignore
     @Test
     public void shouldCreateUserWithAdminRights(){
-       User user = new User();
+       UserEntity user = new UserEntity();
        user.setUsername("testuser");
        user.setRole("ROLE_ADMIN");
        user.setPassword("testuser");

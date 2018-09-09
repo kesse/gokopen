@@ -4,15 +4,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
 public class SecurityChecker {
 
     public SecurityChecker(){
         
     }
-    public static boolean isEditAllowedForCurrentUserOnStation(Station station){
+    public static boolean isEditAllowedForCurrentUserOnStation(StationEntity station){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getUsername();
    
@@ -21,7 +21,7 @@ public class SecurityChecker {
     
     
       
-    public static boolean isEditAllowedForCurrentUser(Score score) {
+    public static boolean isEditAllowedForCurrentUser(ScoreEntity score) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getUsername();
         return isUserAllowedToEdit(score.getStation().getStationUser(), user, name);

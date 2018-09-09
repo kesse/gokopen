@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import se.gokopen.persistence.exception.PatrolNotFoundException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 import se.gokopen.persistence.repository.ScoreRepository;
@@ -32,7 +32,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public void saveScore(Score score) throws ScoreNotSavedException {
+    public void saveScore(ScoreEntity score) throws ScoreNotSavedException {
         if (isScoreInEditMode(score) || !hasScoreBeenSavedBefore(score)) {
             Date saved = new Date();
             score.setLastSaved(saved);
@@ -45,7 +45,7 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     @Transactional
     //TODO ta bort=
-    public List<Score> getAllScores() {
+    public List<ScoreEntity> getAllScores() {
 
         return StreamSupport.stream(scoreRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
@@ -53,9 +53,9 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public List<Score> getScoreByPatrolId(Integer id) {
+    public List<ScoreEntity> getScoreByPatrolId(Integer id) {
 
-        Patrol patrol = null;
+        PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(id);
         } catch (PatrolNotFoundException e) {
@@ -67,7 +67,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public void deleteScore(Score score) {
+    public void deleteScore(ScoreEntity score) {
         scoreRepository.delete(score);
     }
 
@@ -79,8 +79,8 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     @Transactional
-    public Score getScoreById(Integer id) throws ScoreNotFoundException {
-        Score score = scoreRepository.findOne(id);
+    public ScoreEntity getScoreById(Integer id) throws ScoreNotFoundException {
+        ScoreEntity score = scoreRepository.findOne(id);
 
         if (score == null) {
             throw new ScoreNotFoundException("Hittar inte poäng med id: " + id);
@@ -89,11 +89,11 @@ public class ScoreServiceImpl implements ScoreService {
         return score;
     }
     
-    private boolean hasScoreBeenSavedBefore(Score score){
-        Patrol patrol = score.getPatrol();
-        Station station = score.getStation();
+    private boolean hasScoreBeenSavedBefore(ScoreEntity score){
+        PatrolEntity patrol = score.getPatrol();
+        StationEntity station = score.getStation();
 
-        Score foundScore = scoreRepository.findByPatrolAndStation(patrol, station);
+        ScoreEntity foundScore = scoreRepository.findByPatrolAndStation(patrol, station);
 
         if (foundScore == null) {
             System.out.println("Hittar inget poäng, ok att spara");
@@ -103,7 +103,7 @@ public class ScoreServiceImpl implements ScoreService {
         return true;
     }
 
-    private boolean isScoreInEditMode(Score score){
+    private boolean isScoreInEditMode(ScoreEntity score){
         if (score.getScoreId()==null || score.getScoreId()==0){
             return false;
         } else {
@@ -112,8 +112,8 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
-    public List<Score> getScoreOnStation(Integer stationId) {
-        Station station = stationRepository.findOne(stationId);
+    public List<ScoreEntity> getScoreOnStation(Integer stationId) {
+        StationEntity station = stationRepository.findOne(stationId);
 
         return scoreRepository.findAllByStation(station);
     }

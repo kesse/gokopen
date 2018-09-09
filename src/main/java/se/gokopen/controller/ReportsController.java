@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.gokopen.persistence.exception.TrackNotFoundException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.ScoreService;
 import se.gokopen.service.StationService;
@@ -38,19 +38,19 @@ public class ReportsController {
 	
 	@InitBinder
     protected void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Station.class, new StationEditor(this.stationService));
-		binder.registerCustomEditor(Patrol.class, new PatrolEditor(this.patrolService));
-		binder.registerCustomEditor(Track.class, new TrackEditor(this.trackService));
+		binder.registerCustomEditor(StationEntity.class, new StationEditor(this.stationService));
+		binder.registerCustomEditor(PatrolEntity.class, new PatrolEditor(this.patrolService));
+		binder.registerCustomEditor(TrackEntity.class, new TrackEditor(this.trackService));
     }
 	
 	@ModelAttribute("tracks")
-    public List<Track> populateTracks() {
+    public List<TrackEntity> populateTracks() {
 		return trackService.getAllTracks();
 	}
 	
 	@RequestMapping(value="/patrols")
 	public ModelAndView viewPatrols(HttpServletRequest request){
-		List<Patrol> patrols = patrolService.getAllPatrols();
+		List<PatrolEntity> patrols = patrolService.getAllPatrols();
 		return new ModelAndView("viewpatrollist","patrols",patrols);
 	}
 	
@@ -62,7 +62,7 @@ public class ReportsController {
 	@RequestMapping(value="/bytrack/{id}")
 	public ModelAndView startPatrolsByTrack(@PathVariable String id,HttpServletRequest request){
 		
-		Track track = null;
+		TrackEntity track = null;
 		try {
 			track = trackService.getTrackById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -75,7 +75,7 @@ public class ReportsController {
 		request.setAttribute("trackid", track.getTrackId());
 		request.setAttribute("selectedTrack", track.getTrackName());
 		request.setAttribute("backurl", request.getContextPath() + "/reports/bytrack/" + track.getTrackId());
-		List<Patrol> patrols = patrolService.getAllPatrolsByTrack(track);
+		List<PatrolEntity> patrols = patrolService.getAllPatrolsByTrack(track);
 		return new ModelAndView("viewpatrolsbytrack","patrols",patrols);
 	}
 }

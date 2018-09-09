@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import se.gokopen.persistence.entity.Config;
+import se.gokopen.persistence.entity.ConfigEntity;
 
 public class RegistrationChecker {
 
@@ -12,7 +12,7 @@ public class RegistrationChecker {
         // TODO Auto-generated constructor stub
     }
 
-    public static boolean isOpenForRegistration(Config config, int noOfRegisteredPatrolsNow) {
+    public static boolean isOpenForRegistration(ConfigEntity config, int noOfRegisteredPatrolsNow) {
         try {
             int maxPatrols;
             boolean allowRegistration = false;

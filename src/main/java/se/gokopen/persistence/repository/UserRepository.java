@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import se.gokopen.persistence.entity.User;
+import se.gokopen.persistence.entity.UserEntity;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
-    User findByUsername(String username);
+    UserEntity findByUsername(String username);
 
-    List<User> findAllByOrderByUsername();
+    List<UserEntity> findAllByOrderByUsername();
 }

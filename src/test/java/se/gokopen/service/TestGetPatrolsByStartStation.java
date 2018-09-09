@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,11 +28,11 @@ public class TestGetPatrolsByStartStation {
 	@Test
 	public void shouldReturnPatrolsByStartStation() {
 		System.out.println("start");
-		List<Station> stations = stationService.getAllStations();
+		List<StationEntity> stations = stationService.getAllStations();
 		System.out.println("start");
-		for(Station station:stations) {
+		for(StationEntity station:stations) {
 			System.out.println("Kontroll: " + station.getStationName());
-			List<Patrol> patrols = patrolService.getAllPatrolsByStartStation(station);
+			List<PatrolEntity> patrols = patrolService.getAllPatrolsByStartStation(station);
 			System.out.println("antal patruller på kontrollen: " + patrols.size());
 		}
 	}

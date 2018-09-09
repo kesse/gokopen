@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.gokopen.persistence.exception.TrackNotFoundException;
-import se.gokopen.persistence.entity.Config;
-import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.ConfigEntity;
+import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.model.StartStation;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.ScoreService;
@@ -45,13 +45,13 @@ public class PrintController {
 	
 	@InitBinder
     protected void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Station.class, new StationEditor(this.stationService));
-		binder.registerCustomEditor(Patrol.class, new PatrolEditor(this.patrolService));
-		binder.registerCustomEditor(Track.class, new TrackEditor(this.trackService));
+		binder.registerCustomEditor(StationEntity.class, new StationEditor(this.stationService));
+		binder.registerCustomEditor(PatrolEntity.class, new PatrolEditor(this.patrolService));
+		binder.registerCustomEditor(TrackEntity.class, new TrackEditor(this.trackService));
     }
 	
 	@ModelAttribute("tracks")
-    public List<Track> populateTracks() {
+    public List<TrackEntity> populateTracks() {
 		return trackService.getAllTracks();
 	}
 	
@@ -68,7 +68,7 @@ public class PrintController {
 	
 	@RequestMapping(value="/bytrack/{id}")
 	public ModelAndView printScoreCardForTrack(@PathVariable String id,HttpServletRequest request){
-		Track track = null;
+		TrackEntity track = null;
 		try {
 			track = trackService.getTrackById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -77,8 +77,8 @@ public class PrintController {
 			e.printStackTrace();
 		}
 		request.setAttribute("selectedTrack", track.getTrackName());
-		List<Patrol> patrols = patrolService.getAllPatrolsByTrack(track);
-		List<Station> stations = stationService.getAllStations();
+		List<PatrolEntity> patrols = patrolService.getAllPatrolsByTrack(track);
+		List<StationEntity> stations = stationService.getAllStations();
 		request.setAttribute("stations", stations);
 		
 		return new ModelAndView("printscorecardstations","patrols",patrols);
@@ -100,11 +100,11 @@ public class PrintController {
 	
 	private ModelAndView preparePatrolsForPrint() {
         ModelAndView model = new ModelAndView();
-	    Config config = configService.getCurrentConfig();
+	    ConfigEntity config = configService.getCurrentConfig();
 	    model.addObject("config",config);
-	    List<Station> stations = stationService.getAllStations();
+	    List<StationEntity> stations = stationService.getAllStations();
 	    model.addObject("stations",stations);
-	    List<Patrol> patrols = patrolService.getAllPatrols();
+	    List<PatrolEntity> patrols = patrolService.getAllPatrols();
 	    model.addObject("patrols",patrols);
         return model;
     }
@@ -113,9 +113,9 @@ public class PrintController {
 	@RequestMapping(value="/patrolstartonstation", method=RequestMethod.GET)
 	public ModelAndView printPatrolStartOnStation() {
 		ModelAndView model = new ModelAndView();
-		List<Station> stations = stationService.getAllStations();
+		List<StationEntity> stations = stationService.getAllStations();
 		List<StartStation> startStations = new ArrayList<StartStation>();
-		for(Station station:stations) {
+		for(StationEntity station:stations) {
 			StartStation startStation = new StartStation();
 			startStation.setStation(station);
 			startStation.setPatrols(patrolService.getAllPatrolsByStartStation(station));

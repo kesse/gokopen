@@ -8,16 +8,16 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class TestPatrolLogic {
     private static final String STATION2 = "Station2";
-    Patrol patrol;
+    PatrolEntity patrol;
     Date date2;
     @Test
     public void shouldReturnLastSavedTime(){
@@ -36,11 +36,11 @@ public class TestPatrolLogic {
 
 
     private void setupScores() {
-        Station station1 = new Station();
-        Station station2 = new Station();
-        Station station3 = new Station();
-        Station station4 = new Station();
-        Station station5 = new Station();
+        StationEntity station1 = new StationEntity();
+        StationEntity station2 = new StationEntity();
+        StationEntity station3 = new StationEntity();
+        StationEntity station4 = new StationEntity();
+        StationEntity station5 = new StationEntity();
 
         station1.setStationName("Station1");
         station2.setStationName(STATION2);
@@ -48,11 +48,11 @@ public class TestPatrolLogic {
         station4.setStationName("Station4");
         station5.setStationName("Station5");
 
-        Score score1 = new Score();
-        Score score2 = new Score();
-        Score score3 = new Score();
-        Score score4 = new Score();
-        Score score5 = new Score();
+        ScoreEntity score1 = new ScoreEntity();
+        ScoreEntity score2 = new ScoreEntity();
+        ScoreEntity score3 = new ScoreEntity();
+        ScoreEntity score4 = new ScoreEntity();
+        ScoreEntity score5 = new ScoreEntity();
 
         score1.setScorePoint(1);
 
@@ -83,8 +83,8 @@ public class TestPatrolLogic {
         score5.setLastSaved(date5);
         score5.setStation(station5);
 
-        patrol = new Patrol();
-        Set<Score> scores = new LinkedHashSet<Score>();
+        patrol = new PatrolEntity();
+        Set<ScoreEntity> scores = new LinkedHashSet<ScoreEntity>();
         scores.add(score1);
         scores.add(score2);
         scores.add(score3);

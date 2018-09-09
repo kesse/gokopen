@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import se.gokopen.persistence.exception.PatrolNotSavedException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.Distribute;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.StationService;
@@ -35,8 +35,8 @@ public class DistributeController {
 	
 	@RequestMapping(value="all")
 	public ModelAndView distributeAllPatrolsOnAllStations(HttpServletRequest request){
-		List<Station> stations = stationService.getAllStations();
-		List<Patrol> patrols = patrolService.getAllPatrols();
+		List<StationEntity> stations = stationService.getAllStations();
+		List<PatrolEntity> patrols = patrolService.getAllPatrols();
 		Distribute.patrolsOnStations(patrols, stations);
 		try {
 			patrolService.saveAllpatrols(patrols);
@@ -49,11 +49,11 @@ public class DistributeController {
 	
 	@RequestMapping(value="basedontrack")
 	public ModelAndView distributeAllPatrolsBasedOnTrack(HttpServletRequest request) {
-		List<Station> stations = stationService.getAllStations();
-		List<Track> tracks = trackService.getAllTracks();
+		List<StationEntity> stations = stationService.getAllStations();
+		List<TrackEntity> tracks = trackService.getAllTracks();
 		int patrolCounter = 0;
-		for(Track track:tracks) {
-			List<Patrol> patrols = patrolService.getAllPatrolsByTrack(track);
+		for(TrackEntity track:tracks) {
+			List<PatrolEntity> patrols = patrolService.getAllPatrolsByTrack(track);
 			patrolCounter = patrolCounter + patrols.size();
 			Distribute.patrolsOnStations(patrols, stations);
 			try {

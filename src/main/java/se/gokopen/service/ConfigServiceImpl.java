@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.entity.Config;
+import se.gokopen.persistence.entity.ConfigEntity;
 import se.gokopen.persistence.repository.ConfigRepository;
 
 @Service
@@ -17,13 +17,13 @@ public class ConfigServiceImpl implements ConfigService {
     
     @Override
     @Transactional
-    public Config getCurrentConfig() {
-        Iterable<Config> configs = configRepository.findAll();
-        Iterator<Config> configIterator = configs.iterator();
+    public ConfigEntity getCurrentConfig() {
+        Iterable<ConfigEntity> configs = configRepository.findAll();
+        Iterator<ConfigEntity> configIterator = configs.iterator();
 
 
         if (!configIterator.hasNext()) {
-            Config config = new Config();
+            ConfigEntity config = new ConfigEntity();
             config.setName("Gök Open");
 
             return config;
@@ -34,7 +34,7 @@ public class ConfigServiceImpl implements ConfigService {
     
     @Override
     @Transactional
-    public void saveConfig(Config config){
+    public void saveConfig(ConfigEntity config){
         configRepository.save(config);
     }
 }

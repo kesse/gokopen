@@ -4,15 +4,15 @@ import java.util.List;
 
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
-import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.ScoreEntity;
 
 
 public interface ScoreService {
-	public void saveScore(Score score) throws ScoreNotSavedException;
-	public List<Score> getAllScores();
-	public List<Score> getScoreByPatrolId(Integer id);
-	public List<Score> getScoreOnStation(Integer stationId);
-	public void deleteScore(Score score) throws ScoreNotFoundException;
+	public void saveScore(ScoreEntity score) throws ScoreNotSavedException;
+	public List<ScoreEntity> getAllScores();
+	public List<ScoreEntity> getScoreByPatrolId(Integer id);
+	public List<ScoreEntity> getScoreOnStation(Integer stationId);
+	public void deleteScore(ScoreEntity score) throws ScoreNotFoundException;
 	public void deleteScoreById(Integer id) throws ScoreNotFoundException;
-	public Score getScoreById(Integer id) throws ScoreNotFoundException;
+	public ScoreEntity getScoreById(Integer id) throws ScoreNotFoundException;
 }

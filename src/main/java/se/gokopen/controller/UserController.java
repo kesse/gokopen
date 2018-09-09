@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import se.gokopen.persistence.exception.UserNotFoundException;
-import se.gokopen.persistence.entity.User;
+import se.gokopen.persistence.entity.UserEntity;
 import se.gokopen.service.UserService;
 
 @RequestMapping("/admin/user")
@@ -37,7 +37,7 @@ public class UserController {
     
     @RequestMapping(method=RequestMethod.GET)
     public ModelAndView listUser(HttpServletRequest request){
-        List<User> users = userService.getAllUsers();
+        List<UserEntity> users = userService.getAllUsers();
         ModelMap map = new ModelMap();
         map.put("users", users);
         return new ModelAndView("listusers",map);
@@ -45,21 +45,21 @@ public class UserController {
     
     @RequestMapping(value="/new", method=RequestMethod.GET)
     public ModelAndView createUser(){
-        User user = new User();
+        UserEntity user = new UserEntity();
         ModelMap map = new ModelMap();
         map.addAttribute("user",user);
         return new ModelAndView("edituser",map);
     }
     
     @RequestMapping(value="/save", method=RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user")User user, HttpServletRequest request){
+    public String saveUser(@ModelAttribute("user") UserEntity user, HttpServletRequest request){
         userService.saveUser(user);       
         return "redirect:/admin/user";
     }
     
     @RequestMapping(value="/open/{id}", method=RequestMethod.GET)
     public ModelAndView openUser(@PathVariable String id){
-        User user = null;
+        UserEntity user = null;
         try {
             user = userService.getUserById(Integer.parseInt(id));
         } catch (UserNotFoundException e) {

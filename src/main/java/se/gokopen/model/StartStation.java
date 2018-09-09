@@ -2,25 +2,25 @@ package se.gokopen.model;
 
 import java.util.List;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
 
 public class StartStation {
-	private Station station;
-	private List<Patrol> patrols;
+	private StationEntity station;
+	private List<PatrolEntity> patrols;
 	
 	
 	
-	public Station getStation() {
+	public StationEntity getStation() {
 		return station;
 	}
-	public void setStation(Station station) {
+	public void setStation(StationEntity station) {
 		this.station = station;
 	}
-	public List<Patrol> getPatrols() {
+	public List<PatrolEntity> getPatrols() {
 		return patrols;
 	}
-	public void setPatrols(List<Patrol> patrols) {
+	public void setPatrols(List<PatrolEntity> patrols) {
 		this.patrols = patrols;
 	}
 	

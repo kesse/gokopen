@@ -18,9 +18,9 @@ import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 import se.gokopen.persistence.exception.StationNotFoundException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.ScoreService;
 import se.gokopen.service.StationService;
@@ -40,32 +40,32 @@ public class CorrectScoreController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView startPageCorrectScore(){
-        List<Station> stations = stationService.getAllStations();
+        List<StationEntity> stations = stationService.getAllStations();
         ModelAndView model = new ModelAndView();
         model.addObject("stations", stations);
         model.setViewName("correctscorestartpage");
-        model.addObject("selectedstation",new Station());
+        model.addObject("selectedstation",new StationEntity());
         return model;
     }
 
     @RequestMapping(path="/selectstation", method = RequestMethod.GET)
-    public ModelAndView selectStation(Station selectedStation){
-        List<Station> stations = stationService.getAllStations();
+    public ModelAndView selectStation(StationEntity selectedStation){
+        List<StationEntity> stations = stationService.getAllStations();
         ModelAndView model = new ModelAndView();
         try {
-            Station station = stationService.getStationById(selectedStation.getStationId());
+            StationEntity station = stationService.getStationById(selectedStation.getStationId());
             model.addObject("stations", stations);
             model.addObject("selectedstation",station);
 
             //hämta poäng för den kontrollen
             if(SecurityChecker.isEditAllowedForCurrentUserOnStation(station)){
-                List<Score> scores = scoreService.getScoreOnStation(station.getStationId());
+                List<ScoreEntity> scores = scoreService.getScoreOnStation(station.getStationId());
                 model.addObject("scores",scores);    
             }else{
                 model.addObject("errormsg","Du kan inte ändra poäng på den här kontrollen.");
             }
         } catch (NumberFormatException | StationNotFoundException e) {
-            model.addObject("selectedstation",new Station());
+            model.addObject("selectedstation",new StationEntity());
         } 
         model.setViewName("correctscorestartpage");
         return model;
@@ -75,7 +75,7 @@ public class CorrectScoreController {
     public ModelAndView fetchScoreForEdit(@PathVariable String id, HttpServletRequest request){
         ModelAndView model = new ModelAndView();
         try {
-            Score score = scoreService.getScoreById(Integer.parseInt(id));
+            ScoreEntity score = scoreService.getScoreById(Integer.parseInt(id));
             model.addObject("score",score);
         } catch (ScoreNotFoundException e) {
             model.addObject("errormsg","Hittar inte den poängen.");
@@ -88,29 +88,29 @@ public class CorrectScoreController {
     public ModelAndView deleteScore(@PathVariable("scoreid") String scoreid, @PathVariable("stationId") String stationId){
         ModelAndView model = new ModelAndView();
         try {
-            Score score = scoreService.getScoreById(Integer.parseInt(scoreid));
-            Patrol patrol = patrolService.getPatrolById(score.getPatrol().getPatrolId());
+            ScoreEntity score = scoreService.getScoreById(Integer.parseInt(scoreid));
+            PatrolEntity patrol = patrolService.getPatrolById(score.getPatrol().getPatrolId());
             patrol.deleteScore(score);
             patrolService.savePatrol(patrol);
             model.addObject("alertmsg","Poängen togs bort för patrull " + patrol.getPatrolName());
         } catch (NumberFormatException | ScoreNotFoundException | PatrolNotFoundException | PatrolNotSavedException e) {
             model.addObject("errormsg","Kunde inte hitta och ta bort poängen.");
         }
-        List<Station> stations = stationService.getAllStations();
+        List<StationEntity> stations = stationService.getAllStations();
         model.addObject("stations",stations);
-        Station selectedStation;
+        StationEntity selectedStation;
         try {
             selectedStation = stationService.getStationById(Integer.parseInt(stationId));
             model.addObject("selectedstation",selectedStation);
             if(SecurityChecker.isEditAllowedForCurrentUserOnStation(selectedStation)){
-                List<Score> scores = scoreService.getScoreOnStation(selectedStation.getStationId());
+                List<ScoreEntity> scores = scoreService.getScoreOnStation(selectedStation.getStationId());
                 model.addObject("scores",scores);    
             }else{
                 model.addObject("errormsg","Du kan inte ändra poäng på den här kontrollen.");
             }
             
         } catch (StationNotFoundException e) {
-            model.addObject("selectedstation",new Station());
+            model.addObject("selectedstation",new StationEntity());
         }
         
         model.setViewName("correctscorestartpage");
@@ -120,8 +120,8 @@ public class CorrectScoreController {
     
     
     @RequestMapping(path="/save", method = RequestMethod.POST)
-    public ModelAndView saveScore(Score score, BindingResult errors,
-            HttpServletRequest request, HttpServletResponse response){
+    public ModelAndView saveScore(ScoreEntity score, BindingResult errors,
+                                  HttpServletRequest request, HttpServletResponse response){
         ModelAndView model = new ModelAndView();
         model.setViewName("correctscorestartpage");
         try {
@@ -130,21 +130,21 @@ public class CorrectScoreController {
         } catch (ScoreNotSavedException e) {
             model.addObject("errormsg","Det gick inte att spara poängen.");
         }
-        List<Station> stations = stationService.getAllStations();
+        List<StationEntity> stations = stationService.getAllStations();
         model.addObject("stations",stations);
-        Station selectedStation;
+        StationEntity selectedStation;
         try {
             selectedStation = stationService.getStationById(score.getStation().getStationId());
             model.addObject("selectedstation",selectedStation);
             if(SecurityChecker.isEditAllowedForCurrentUserOnStation(selectedStation)){
-                List<Score> scores = scoreService.getScoreOnStation(selectedStation.getStationId());
+                List<ScoreEntity> scores = scoreService.getScoreOnStation(selectedStation.getStationId());
                 model.addObject("scores",scores);    
             }else{
                 model.addObject("errormsg","Du kan inte ändra poäng på den här kontrollen.");
             }
             
         } catch (StationNotFoundException e) {
-            model.addObject("selectedstation",new Station());
+            model.addObject("selectedstation",new StationEntity());
         }
         
         return model;

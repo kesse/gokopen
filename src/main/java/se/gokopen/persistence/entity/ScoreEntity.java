@@ -15,16 +15,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="score")
-public class Score {
+public class ScoreEntity {
 	private Integer scoreId = null;
-	private Station station;
+	private StationEntity station;
 	private int scorePoint;
 	private int stylePoint;
-	private Patrol patrol;
+	private PatrolEntity patrol;
 	private Date lastSaved;
 	private boolean visitedWaypoint;
 	
-	public Score(){
+	public ScoreEntity(){
 		
 	}
 
@@ -44,12 +44,12 @@ public class Score {
 
 	@ManyToOne
 	@JoinColumn(name="fk_station")
-	public Station getStation() {
+	public StationEntity getStation() {
 		return station;
 	}
 
 
-	public void setStation(Station station) {
+	public void setStation(StationEntity station) {
 		this.station = station;
 	}
 
@@ -82,13 +82,13 @@ public class Score {
         this.lastSaved = lastSaved;
     }
 
-    public void setPatrol(Patrol patrol) {
+    public void setPatrol(PatrolEntity patrol) {
 		this.patrol = patrol;
 	}
 
 	@ManyToOne
 	@JoinColumn(name="fk_patrol")
-	public Patrol getPatrol() {
+	public PatrolEntity getPatrol() {
 		return patrol;
 	}
 

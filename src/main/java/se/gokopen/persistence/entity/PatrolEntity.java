@@ -33,7 +33,7 @@ import se.gokopen.model.Status;
 
 @Entity
 @Table(name = "patrol")
-public class Patrol implements Comparable<Patrol> {
+public class PatrolEntity implements Comparable<PatrolEntity> {
     private Integer patrolId;
     private String externalId;
     @NotEmpty(message = "Fyll i ett namn på patrullen")
@@ -42,13 +42,13 @@ public class Patrol implements Comparable<Patrol> {
     @NotEmpty(message = "Fyll i patrullens scoutkår")
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String troop;
-    private Track track;
+    private TrackEntity track;
     private String startTime;
     private String endTime;
     private String members;
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String note;
-    private Set<Score> scores = new LinkedHashSet<Score>();
+    private Set<ScoreEntity> scores = new LinkedHashSet<ScoreEntity>();
     @NotEmpty (message = "Missa inte att fylla i kontaktperson")
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String leaderContact;
@@ -62,10 +62,10 @@ public class Patrol implements Comparable<Patrol> {
     private Status status;
     private Date dateRegistered;
     private Boolean paid = false;
-    private Score latestScore;
-    private Station startStation;
+    private ScoreEntity latestScore;
+    private StationEntity startStation;
 
-    public Patrol() { 
+    public PatrolEntity() {
 
     }
 
@@ -110,11 +110,11 @@ public class Patrol implements Comparable<Patrol> {
 
     @ManyToOne
     @JoinColumn(name = "fk_track")
-    public Track getTrack() {
+    public TrackEntity getTrack() {
         return track;
     }
 
-    public void setTrack(Track track) {
+    public void setTrack(TrackEntity track) {
         this.track = track;
     }
 
@@ -159,19 +159,19 @@ public class Patrol implements Comparable<Patrol> {
     // @OrderBy("station asc")
     @OrderBy("lastSaved desc")
     @JoinColumn(name = "fk_patrol")
-    public Set<Score> getScores() {
+    public Set<ScoreEntity> getScores() {
         return scores;
     }
 
-    public void setScores(Set<Score> scores) {
+    public void setScores(Set<ScoreEntity> scores) {
         this.scores = scores;
     }
 
-    public void deleteScore(Score scoreRemove) {
+    public void deleteScore(ScoreEntity scoreRemove) {
         // find in set of scores and delete it
-        Iterator<Score> itt = scores.iterator();
+        Iterator<ScoreEntity> itt = scores.iterator();
         while (itt.hasNext()) {
-            Score s = itt.next();
+            ScoreEntity s = itt.next();
             if (s.getScoreId().equals(scoreRemove.getScoreId())) {
                 System.out.println("found scoreID" + s.getScoreId() + " in scores and removed it");
                 itt.remove();
@@ -247,7 +247,7 @@ public class Patrol implements Comparable<Patrol> {
     @Transient
     public Integer getTotalScorePoint() {
         Integer points = 0;
-        for (Score score : scores) {
+        for (ScoreEntity score : scores) {
             points = points + score.getScorePoint();
         }
         return points;
@@ -256,7 +256,7 @@ public class Patrol implements Comparable<Patrol> {
     @Transient
     public Integer getTotalStylePoint() {
         Integer points = 0;
-        for (Score score : scores) {
+        for (ScoreEntity score : scores) {
             points = points + score.getStylePoint();
         }
         return points;
@@ -274,13 +274,13 @@ public class Patrol implements Comparable<Patrol> {
     }
 
     @Transient
-    public Score getLatestScore() {
+    public ScoreEntity getLatestScore() {
         Calendar myCalendar = new GregorianCalendar(2014, Calendar.JANUARY, 1);
         Date lastSaved = myCalendar.getTime();
-        Score lastSavedScore = new Score();
+        ScoreEntity lastSavedScore = new ScoreEntity();
         lastSavedScore.setLastSaved(lastSaved);
 
-        for (Score score : scores) {
+        for (ScoreEntity score : scores) {
             if (score.getLastSaved() != null && score.getLastSaved().after(lastSaved)) {
                 lastSaved = score.getLastSaved();
                 lastSavedScore = score;
@@ -297,8 +297,8 @@ public class Patrol implements Comparable<Patrol> {
     @Transient
     public Integer getNumberOfXPoints(int x) {
         int numberOfXPoints = 0;
-        for(Score score:scores) {
-            Station currentStation = score.getStation();
+        for(ScoreEntity score:scores) {
+            StationEntity currentStation = score.getStation();
             if(null == currentStation.getWaypoint()) {
                 currentStation.setWaypoint(false);
             }
@@ -313,7 +313,7 @@ public class Patrol implements Comparable<Patrol> {
     }
 
     @Override
-    public int compareTo(Patrol p) {
+    public int compareTo(PatrolEntity p) {
         int comp = p.getTotalScore().compareTo(getTotalScore());
         if (comp == 0) {
             comp = p.getTotalScorePoint().compareTo(getTotalScorePoint());
@@ -333,11 +333,11 @@ public class Patrol implements Comparable<Patrol> {
 
     @ManyToOne
     @JoinColumn(name = "fk_station")
-    public Station getStartStation() {
+    public StationEntity getStartStation() {
         return startStation;
     }
 
-    public void setStartStation(Station startStation) {
+    public void setStartStation(StationEntity startStation) {
         this.startStation = startStation;
     }
 }

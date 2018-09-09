@@ -21,10 +21,10 @@ import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 import se.gokopen.persistence.exception.StationNotFoundException;
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
-import se.gokopen.persistence.entity.Station;
-import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.ScoreService;
 import se.gokopen.service.StationService;
@@ -45,40 +45,40 @@ public class ScoreController {
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(Station.class, new StationEditor(
+		binder.registerCustomEditor(StationEntity.class, new StationEditor(
 				this.stationService));
-		binder.registerCustomEditor(Patrol.class, new PatrolEditor(
+		binder.registerCustomEditor(PatrolEntity.class, new PatrolEditor(
 				this.patrolService));
-		binder.registerCustomEditor(Track.class, new TrackEditor(
+		binder.registerCustomEditor(TrackEntity.class, new TrackEditor(
 				this.trackService));
 	}
 
 	@ModelAttribute("tracks")
-	public List<Track> populateTracks() {
+	public List<TrackEntity> populateTracks() {
 		return trackService.getAllTracks();
 	}
 
 	@ModelAttribute("stations")
-	public List<Station> populateStations() {
+	public List<StationEntity> populateStations() {
 		return stationService.getAllStations();
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView startScore() {
-		Score score = new Score();
+		ScoreEntity score = new ScoreEntity();
 		return new ModelAndView("reportscore", "score", score);
 	}
 
 	@RequestMapping(value = "/selectstation", method = RequestMethod.POST)
-	public ModelAndView selectStation(Score score, BindingResult errors,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView selectStation(ScoreEntity score, BindingResult errors,
+									  HttpServletRequest request, HttpServletResponse response) {
 		if(SecurityChecker.isEditAllowedForCurrentUser(score)){
-			List<Patrol> patrols = patrolService.getAllActivePatrolsLeftOnStation(score.getStation().getStationId());
+			List<PatrolEntity> patrols = patrolService.getAllActivePatrolsLeftOnStation(score.getStation().getStationId());
 			request.setAttribute("patrols", patrols);
 			return new ModelAndView("reportscore", "score", score);
 		}else{
 			request.setAttribute("errormsg", "Du har inte behörighet att ge poäng på denna kontroll.");
-			score = new Score();
+			score = new ScoreEntity();
 			return new ModelAndView("reportscore", "score", score);
 		}
 	}
@@ -86,7 +86,7 @@ public class ScoreController {
 	//Används nog inte
 	@RequestMapping(value = "/editscore/{id}")
 	public ModelAndView editScore(@PathVariable String id, HttpServletRequest request) {
-		Score score = null;
+		ScoreEntity score = null;
 		try {
 			score = scoreService.getScoreById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -102,7 +102,7 @@ public class ScoreController {
 
 	@RequestMapping(value = "/editscorefrompatrol/{id}/returnto/{patrolid}")
 	public ModelAndView editScoreFromPatrolView(@PathVariable String id, @PathVariable String patrolid, HttpServletRequest request) {
-		Score score = null;
+		ScoreEntity score = null;
 		try {
 			score = scoreService.getScoreById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -121,7 +121,7 @@ public class ScoreController {
 			return new ModelAndView("editscore", "score", score);	
 		}else{
 			//Får inte redigera därmed tillbaka till patrullen
-			Patrol patrol = null;
+			PatrolEntity patrol = null;
 			try {
 				patrol = patrolService.getPatrolById(Integer.parseInt(patrolid));
 			} catch (NumberFormatException e) {
@@ -138,7 +138,7 @@ public class ScoreController {
 	@RequestMapping(value = "/viewscore/{id}")
 	public ModelAndView viewScore(@PathVariable String id,
 			HttpServletRequest request) {
-		Score score = null;
+		ScoreEntity score = null;
 		try {
 			score = scoreService.getScoreById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
@@ -150,8 +150,8 @@ public class ScoreController {
 	}
 
 	@RequestMapping(value = "/savescore", method = RequestMethod.POST)
-	public ModelAndView saveScore(Score score, BindingResult errors,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveScore(ScoreEntity score, BindingResult errors,
+								  HttpServletRequest request, HttpServletResponse response) {
 	    ModelAndView model = new ModelAndView();
 	    
 		if(score.getPatrol()==null){
@@ -174,8 +174,8 @@ public class ScoreController {
 		
 		model.addObject("saved", true);
 
-		Score scorenew = new Score();
-		Station stationTest = new Station();
+		ScoreEntity scorenew = new ScoreEntity();
+		StationEntity stationTest = new StationEntity();
 		try {
 			stationTest = stationService.getStationById(score.getStation().getStationId());
 			
@@ -184,7 +184,7 @@ public class ScoreController {
 		}
 		
 		scorenew.setStation(stationTest);
-		List<Patrol> patrols = patrolService.getAllActivePatrolsLeftOnStation(stationTest.getStationId());
+		List<PatrolEntity> patrols = patrolService.getAllActivePatrolsLeftOnStation(stationTest.getStationId());
 		model.addObject("patrols",patrols);
 		model.addObject("score",scorenew);
 
@@ -193,9 +193,9 @@ public class ScoreController {
 	}
 
 	@RequestMapping(value = "/savescorefrompatrol", method = RequestMethod.POST)
-	public ModelAndView saveScoreFromPatrol(Score score,
-			BindingResult errors, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView saveScoreFromPatrol(ScoreEntity score,
+											BindingResult errors, HttpServletRequest request,
+											HttpServletResponse response) {
 		try {
 			scoreService.saveScore(score);
 		} catch (ScoreNotSavedException e) {
@@ -203,7 +203,7 @@ public class ScoreController {
 		}
 
 		Integer patrolId = score.getPatrol().getPatrolId();
-		Patrol patrolReloaded = null;
+		PatrolEntity patrolReloaded = null;
 		try {
 			patrolReloaded = patrolService.getPatrolById(patrolId);
 		} catch (PatrolNotFoundException e) {
@@ -218,8 +218,8 @@ public class ScoreController {
 	public ModelAndView deleteScore(@PathVariable String id,
 			@PathVariable String patrolid, HttpServletRequest request) {
 		// return to viewpatrol with value to back-link
-		Score score = null;
-		Patrol patrol = null;
+		ScoreEntity score = null;
+		PatrolEntity patrol = null;
 		try {
 			score = scoreService.getScoreById(Integer.parseInt(id));
 			System.out.println("deleting: found score: " + score.getScoreId() + " score: " + score.getScorePoint() + " at station: " + score.getStation().getStationName());

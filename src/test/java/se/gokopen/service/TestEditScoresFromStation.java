@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.persistence.entity.Patrol;
-import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
@@ -25,11 +25,11 @@ public class TestEditScoresFromStation {
     @Ignore
     @Test
     public void shouldReturnAllScoresOnOneStation(){
-        List<Score> scores = scoreService.getScoreOnStation(2);
+        List<ScoreEntity> scores = scoreService.getScoreOnStation(2);
         System.out.println("antal poäng: " + scores.size());
-        for(Score score:scores){
+        for(ScoreEntity score:scores){
             System.out.println("poäng: " + score.getScorePoint());
-            Patrol patrol = score.getPatrol();
+            PatrolEntity patrol = score.getPatrol();
             if(patrol==null){
                 System.out.println("patrullen är ingen");
             }else{

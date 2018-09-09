@@ -2,17 +2,17 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.exception.StationNotFoundException;
 
 public interface StationService {
-	void saveStation(Station station);
+	void saveStation(StationEntity station);
 
-	List<Station> getAllStations();
+	List<StationEntity> getAllStations();
 
-	void deleteStation(Station station);
+	void deleteStation(StationEntity station);
 
 	void deleteStationById(Integer id);
 
-	Station getStationById(Integer id) throws StationNotFoundException;
+	StationEntity getStationById(Integer id) throws StationNotFoundException;
 }
