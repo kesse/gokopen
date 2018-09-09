@@ -1,19 +1,18 @@
 package se.gokopen.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Ignore;
-
-import se.gokopen.dao.PatrolNotFoundException;
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.model.Patrol;
 import se.gokopen.model.Status;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
+
+import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

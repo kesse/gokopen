@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import se.gokopen.dao.UserNotFoundException;
-import se.gokopen.model.User;
+import se.gokopen.persistence.exception.UserNotFoundException;
+import se.gokopen.persistence.entity.User;
 import se.gokopen.service.UserService;
 
 @RequestMapping("/admin/user")

@@ -1,8 +1,8 @@
 package se.gokopen.controller;
 
 import java.beans.PropertyEditorSupport;
-import se.gokopen.dao.StationNotFoundException;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.exception.StationNotFoundException;
+import se.gokopen.persistence.entity.Station;
 import se.gokopen.service.StationService;
 
 public class StationEditor extends PropertyEditorSupport {

@@ -1,11 +1,11 @@
 package se.gokopen.service;
 
-import se.gokopen.model.Config;
+import se.gokopen.persistence.entity.Config;
 
 public interface ConfigService {
 
-    public abstract Config getCurrentConfig();
+    Config getCurrentConfig();
 
-    public abstract void saveConfig(Config config);
+    void saveConfig(Config config);
 
 }

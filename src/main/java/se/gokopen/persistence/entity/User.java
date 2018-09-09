@@ -1,4 +1,4 @@
-package se.gokopen.model;
+package se.gokopen.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

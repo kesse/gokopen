@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.model.Config;
-import se.gokopen.model.Patrol;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
+import se.gokopen.persistence.entity.Config;
+import se.gokopen.persistence.entity.Patrol;
 import se.gokopen.model.Status;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.Track;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.TrackService;

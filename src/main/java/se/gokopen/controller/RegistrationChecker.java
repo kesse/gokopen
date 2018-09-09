@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import se.gokopen.model.Config;
+import se.gokopen.persistence.entity.Config;
 
 public class RegistrationChecker {
 

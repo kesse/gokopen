@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Station;
 
 
 public class TestDistributePatrols {

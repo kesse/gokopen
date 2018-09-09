@@ -5,25 +5,27 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.dao.PatrolDAO;
-import se.gokopen.dao.PatrolNotFoundException;
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Score;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.model.Status;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.repository.PatrolRepository;
 
 @Service
 public class PatrolServiceImpl implements PatrolService {
 
     @Autowired
-    private PatrolDAO patrolDao;
+    private PatrolRepository patrolRepository;
 
     @Override
     @Transactional
@@ -32,13 +34,13 @@ public class PatrolServiceImpl implements PatrolService {
             Date registered = new Date();
             patrol.setDateRegistered(registered);
         }
-        patrolDao.save(patrol);
+        patrolRepository.save(patrol);
     }
 
     private boolean isNewPatrol(Patrol patrol) {
-        if(patrol.getPatrolId()==null || patrol.getPatrolId()==0) {
+        if (patrol.getPatrolId()==null || patrol.getPatrolId()==0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -46,39 +48,38 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrols() {
-        return patrolDao.getAllPatrols();
+        return StreamSupport.stream(patrolRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void deletePatrol(Patrol patrol) throws PatrolNotFoundException {
-        patrolDao.delete(patrol);
-
+        patrolRepository.delete(patrol);
     }
 
     @Override
     @Transactional
     public void deletePatrolById(Integer id) throws PatrolNotFoundException {
-        patrolDao.deleteById(id);
-
+        patrolRepository.delete(id);
     }
 
     @Override
     @Transactional
     public Patrol getPatrolById(Integer id) throws PatrolNotFoundException {
-        return patrolDao.getById(id);
+        Patrol patrol = patrolRepository.findOne(id);
+
+        if (patrol == null) {
+            throw new PatrolNotFoundException("Hittar inte patrullen med id: " + id);
+        }
+
+        return patrol;
     }
 
-
-    @Override
-    @Transactional
-    public List<Patrol> getAllPatrolsByTrackId(Integer trackId) {
-        return patrolDao.getPatrolsByTrackId(trackId);
-    }
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsByTrack(Track track) {
-        List<Patrol> patrols = patrolDao.getPatrolsByTrack(track);
+        List<Patrol> patrols = patrolRepository.findAllByTrack(track);
         Collections.sort(patrols); //sorterar efter högst poäng (standardsortering för patrolsklassen)
         return patrols;
     }
@@ -86,7 +87,7 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsLeftOnStation(Integer stationId) {
-        List<Patrol> allPatrols = patrolDao.getAllPatrols();
+        List<Patrol> allPatrols = getAllPatrols();
 
         Iterator<Patrol> itt = allPatrols.iterator();
         while(itt.hasNext()){
@@ -107,19 +108,19 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsSortedByStatus() {
-        return patrolDao.getAllPatrolsSortedByStatus();
+        return patrolRepository.findAllByOrderByStatus();
     }
 
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsSortedByTroop() {
-        return patrolDao.getAllPatrolsSortedByTroop();
+        return patrolRepository.findAllByOrderByTroop();
     }
 
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsSortedByNumberOfStations() {
-        List<Patrol> patrols = patrolDao.getAllPatrols();
+        List<Patrol> patrols = getAllPatrols();
         Collections.sort(patrols, new BeanComparator("totalReportedStations"));
         return patrols;
     }
@@ -127,14 +128,13 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsSortedByTrack() {
-        List<Patrol> patrols = patrolDao.getAllPatrolsSortedByTrack();
-        return patrols;
+        return patrolRepository.findAllByOrderByTrack();
     }
 
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsSortedByScore() {
-        List<Patrol> patrols = patrolDao.getAllPatrols();
+        List<Patrol> patrols = getAllPatrols();
         Collections.sort(patrols, Collections.reverseOrder(new BeanComparator("totalScore")));
         return patrols;
     }
@@ -143,8 +143,8 @@ public class PatrolServiceImpl implements PatrolService {
     @Transactional
     public List<Patrol> getAllActivePatrolsLeftOnStation(Integer stationId) {
         List<Patrol> patrols = getAllPatrolsLeftOnStation(stationId);
-        List<Patrol> activePatrols = getActiveAndWaitingPatolsFromList(patrols);
-        return activePatrols;
+
+        return getActiveAndWaitingPatolsFromList(patrols);
     }
 
     public List<Patrol> getActiveAndWaitingPatolsFromList(List<Patrol> patrols) {
@@ -160,7 +160,7 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsCriteria() {
-        return patrolDao.getAllPatrols();
+        return getAllPatrols();
     }
 
     @Override
@@ -175,6 +175,6 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public List<Patrol> getAllPatrolsByStartStation(Station station) {
-        return patrolDao.getAllPatrolsByStartStation(station);
+        return patrolRepository.findAllByStartStation(station);
     }
 }

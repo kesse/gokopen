@@ -1,18 +1,18 @@
 package se.gokopen.service;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Score;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class TestCompareResults {
     

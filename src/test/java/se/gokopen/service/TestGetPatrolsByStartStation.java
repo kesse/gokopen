@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Station;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

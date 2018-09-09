@@ -1,8 +1,5 @@
 package se.gokopen.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -11,20 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.dao.PatrolNotFoundException;
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.dao.ScoreNotFoundException;
-import se.gokopen.dao.ScoreNotSavedException;
-import se.gokopen.dao.StationNotFoundException;
-import se.gokopen.dao.StationNotSavedException;
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Score;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.exception.ScoreNotFoundException;
+import se.gokopen.persistence.exception.ScoreNotSavedException;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
-
-
 public class TestScoreValidation {
 
     private Station station1;
@@ -43,13 +39,13 @@ public class TestScoreValidation {
     private StationService stationService;
     
     @Before
-    public void setup() throws PatrolNotSavedException, StationNotSavedException{
+    public void setup() {
                
     }
 
     @Ignore
     @Test
-    public void shouldNotSaveIfScoreAlreadySaved() throws PatrolNotSavedException, StationNotSavedException{
+    public void shouldNotSaveIfScoreAlreadySaved() throws PatrolNotSavedException {
         patrol1 = new Patrol();
         patrol2 = new Patrol();
         station1 = new Station();
@@ -118,19 +114,10 @@ public class TestScoreValidation {
             stationService.deleteStation(station1);
             stationService.deleteStation(station2);
             
-        } catch (ScoreNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (StationNotFoundException e) {
+        } catch (ScoreNotFoundException | PatrolNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-        
-        
     }
 
 }

@@ -8,6 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 

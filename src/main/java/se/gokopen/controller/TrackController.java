@@ -1,7 +1,6 @@
 package se.gokopen.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.dao.TrackNotFoundException;
-import se.gokopen.dao.TrackNotSavedException;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.Track;
+import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.service.TrackService;
 
 @RequestMapping("/admin/track")
@@ -28,13 +26,8 @@ public class TrackController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView save(Track track,BindingResult errors, HttpServletRequest request, HttpServletResponse response){
-		try {
-			trackService.saveTrack(track);
-		} catch (TrackNotSavedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		trackService.saveTrack(track);
+
 		//Lista på tracks
 		List<Track> tracks = trackService.getAllTracks();
 		return new ModelAndView("tracklist","tracks",tracks);
@@ -75,9 +68,6 @@ public class TrackController {
 		try {
 			trackService.deleteTrackById(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TrackNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

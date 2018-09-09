@@ -1,4 +1,4 @@
-package se.gokopen.model;
+package se.gokopen.persistence.entity;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,13 +23,13 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.annotations.Cascade;
+
+import se.gokopen.model.Status;
 
 @Entity
 @Table(name = "patrol")

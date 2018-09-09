@@ -1,4 +1,4 @@
-package se.gokopen.dao;
+package se.gokopen.persistence.exception;
 
 public class TrackNotFoundException extends Exception {
 

@@ -2,8 +2,8 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Station;
 
 public class Distribute {
 

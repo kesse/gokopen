@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.dao.TrackNotFoundException;
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.exception.TrackNotFoundException;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Track;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.TrackService;

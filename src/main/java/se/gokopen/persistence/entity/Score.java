@@ -1,4 +1,4 @@
-package se.gokopen.model;
+package se.gokopen.persistence.entity;
 
 import java.util.Date;
 
@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 
 @Entity

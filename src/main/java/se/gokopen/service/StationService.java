@@ -2,14 +2,17 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import se.gokopen.dao.StationNotFoundException;
-import se.gokopen.dao.StationNotSavedException;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.exception.StationNotFoundException;
 
 public interface StationService {
-	public void saveStation(Station station) throws StationNotSavedException ;
-	public List<Station> getAllStations();
-	public void deleteStation(Station station) throws StationNotFoundException;
-	public void deleteStationById(Integer id) throws StationNotFoundException;
-	public Station getStationById(Integer id) throws StationNotFoundException;
+	void saveStation(Station station);
+
+	List<Station> getAllStations();
+
+	void deleteStation(Station station);
+
+	void deleteStationById(Integer id);
+
+	Station getStationById(Integer id) throws StationNotFoundException;
 }

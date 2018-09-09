@@ -31,7 +31,9 @@ dependencies {
 	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
 	compile('javax.servlet:jstl')
 	compile('org.springframework.security:spring-security-taglibs')
-	
+
+	compile('org.jsoup:jsoup:1.11.3')
+
 	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

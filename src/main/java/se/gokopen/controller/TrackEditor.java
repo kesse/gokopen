@@ -3,8 +3,8 @@ package se.gokopen.controller;
 import java.beans.PropertyEditorSupport;
 
 
-import se.gokopen.dao.TrackNotFoundException;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.exception.TrackNotFoundException;
+import se.gokopen.persistence.entity.Track;
 import se.gokopen.service.TrackService;
 
 public class TrackEditor extends PropertyEditorSupport {

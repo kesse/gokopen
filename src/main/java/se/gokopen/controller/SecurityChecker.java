@@ -4,8 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import se.gokopen.model.Score;
-import se.gokopen.model.Station;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
 
 public class SecurityChecker {
 

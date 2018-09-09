@@ -1,7 +1,6 @@
 package se.gokopen.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import se.gokopen.dao.StationNotFoundException;
-import se.gokopen.dao.StationNotSavedException;
-import se.gokopen.model.Station;
+
+import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.exception.StationNotFoundException;
 import se.gokopen.service.StationService;
 
 @RequestMapping("/admin/station")
@@ -27,12 +26,8 @@ public class StationController {
 
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView save(Station station,BindingResult errors, HttpServletRequest request, HttpServletResponse response){
-		try {
-			stationService.saveStation(station);
-		} catch (StationNotSavedException e) {
-			e.printStackTrace();
-		}
-		
+		stationService.saveStation(station);
+
 		//Lista på stationer
 		List<Station> stations = stationService.getAllStations();
 		return new ModelAndView("stationlist","stations",stations);

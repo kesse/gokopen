@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Station;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Station;
+import se.gokopen.persistence.entity.Track;
 import se.gokopen.service.Distribute;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.StationService;

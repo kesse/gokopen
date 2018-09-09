@@ -2,6 +2,9 @@ package se.gokopen.model;
 
 import java.util.List;
 
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Station;
+
 public class StartStation {
 	private Station station;
 	private List<Patrol> patrols;

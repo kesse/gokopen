@@ -9,7 +9,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import se.gokopen.model.Config;
+import se.gokopen.persistence.entity.Config;
 
 public class TestRegistrationLogic {
 

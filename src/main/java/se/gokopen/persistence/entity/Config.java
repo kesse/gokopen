@@ -1,4 +1,4 @@
-package se.gokopen.model;
+package se.gokopen.persistence.entity;
 
 import java.util.Date;
 import javax.persistence.Column;

@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import se.gokopen.model.Patrol;
+import se.gokopen.persistence.entity.Patrol;
 import se.gokopen.model.Status;
 
 public class TestReturnOnlyActivePatrols {

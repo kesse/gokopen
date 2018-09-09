@@ -2,9 +2,9 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import se.gokopen.dao.ScoreNotFoundException;
-import se.gokopen.dao.ScoreNotSavedException;
-import se.gokopen.model.Score;
+import se.gokopen.persistence.exception.ScoreNotFoundException;
+import se.gokopen.persistence.exception.ScoreNotSavedException;
+import se.gokopen.persistence.entity.Score;
 
 
 public interface ScoreService {

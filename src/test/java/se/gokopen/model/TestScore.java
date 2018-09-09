@@ -8,6 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import se.gokopen.persistence.entity.Patrol;
+import se.gokopen.persistence.entity.Score;
+import se.gokopen.persistence.entity.Station;
+
 public class TestScore {
     
     @Test
