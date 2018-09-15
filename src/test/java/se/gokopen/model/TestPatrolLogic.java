@@ -19,20 +19,20 @@ public class TestPatrolLogic {
     private static final String STATION2 = "Station2";
     PatrolEntity patrol;
     Date date2;
+
     @Test
-    public void shouldReturnLastSavedTime(){
+    public void shouldReturnLastSavedTime() {
 
         setupScores();
 
-        assertThat(patrol.getLatestScore().getLastSaved(),equalTo(date2));
+        assertThat(patrol.getLatestScore().getLastSaved(), equalTo(date2));
     }
 
     @Test
     public void should_return_name_of_last_saved_scores_station() {
         setupScores();
-        assertThat(patrol.getLatestScore().getStation().getStationName(),equalTo(STATION2));
+        assertThat(patrol.getLatestScore().getStation().getStationName(), equalTo(STATION2));
     }
-
 
 
     private void setupScores() {
@@ -90,7 +90,7 @@ public class TestPatrolLogic {
         scores.add(score3);
         scores.add(score4);
         scores.add(score5);
-        patrol.setScores(scores );
+        patrol.setScores(scores);
     }
 
 }

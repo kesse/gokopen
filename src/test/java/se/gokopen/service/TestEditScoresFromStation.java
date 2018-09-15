@@ -15,20 +15,20 @@ public class TestEditScoresFromStation extends SpringBootTestBase {
     private ScoreService scoreService;
 
     @Test
-    public void shouldReturnAllScoresOnOneStation(){
+    public void shouldReturnAllScoresOnOneStation() {
         List<ScoreEntity> scores = scoreService.getScoreOnStation(2);
         System.out.println("antal poäng: " + scores.size());
-        for(ScoreEntity score:scores){
+        for (ScoreEntity score : scores) {
             System.out.println("poäng: " + score.getScorePoint());
             PatrolEntity patrol = score.getPatrol();
-            if(patrol==null){
+            if (patrol == null) {
                 System.out.println("patrullen är ingen");
-            }else{
+            } else {
                 System.out.println("patrullen är " + patrol.getPatrolName());
             }
 
         }
-        
+
     }
 
 }

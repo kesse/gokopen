@@ -1,9 +1,5 @@
 package se.gokopen.service;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -15,6 +11,10 @@ import org.junit.Test;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.ScoreEntity;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 
 public class TestPatrolStations {
     private static final String NAME_PATROL2 = "ATestPatrol2";
@@ -24,7 +24,7 @@ public class TestPatrolStations {
     PatrolEntity patrol2;
 
     @Test
-    public void shouldSortListofPatrolsAfterNoOfStations(){
+    public void shouldSortListofPatrolsAfterNoOfStations() {
         initTestData();
 
         List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
@@ -32,11 +32,11 @@ public class TestPatrolStations {
         patrols.add(patrol2);
 
         Collections.sort(patrols, new BeanComparator("totalReportedStations"));
-        assertThat(patrols.get(0).getPatrolName(),is(equalTo(NAME_PATROL2)));
+        assertThat(patrols.get(0).getPatrolName(), is(equalTo(NAME_PATROL2)));
     }
 
     @Test
-    public void shouldSortHighestScoreHighest(){
+    public void shouldSortHighestScoreHighest() {
         initTestData();
 
         List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
@@ -44,7 +44,7 @@ public class TestPatrolStations {
         patrols.add(patrol1);
 
         Collections.sort(patrols, Collections.reverseOrder(new BeanComparator("totalScore")));
-        assertThat(patrols.get(0).getPatrolName(),is(equalTo(NAME_PATROL1)));
+        assertThat(patrols.get(0).getPatrolName(), is(equalTo(NAME_PATROL1)));
     }
 
     private void initTestData() {

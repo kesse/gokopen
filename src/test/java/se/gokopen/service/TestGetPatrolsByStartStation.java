@@ -10,22 +10,22 @@ import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.StationEntity;
 
 public class TestGetPatrolsByStartStation extends SpringBootTestBase {
-	
-	@Autowired
-	private PatrolService patrolService;
 
-	@Autowired
-	private StationService stationService;
+    @Autowired
+    private PatrolService patrolService;
 
-	@Test
-	public void shouldReturnPatrolsByStartStation() {
-		System.out.println("start");
-		List<StationEntity> stations = stationService.getAllStations();
-		System.out.println("start");
-		for(StationEntity station:stations) {
-			System.out.println("Kontroll: " + station.getStationName());
-			List<PatrolEntity> patrols = patrolService.getAllPatrolsByStartStation(station);
-			System.out.println("antal patruller på kontrollen: " + patrols.size());
-		}
-	}
+    @Autowired
+    private StationService stationService;
+
+    @Test
+    public void shouldReturnPatrolsByStartStation() {
+        System.out.println("start");
+        List<StationEntity> stations = stationService.getAllStations();
+        System.out.println("start");
+        for (StationEntity station : stations) {
+            System.out.println("Kontroll: " + station.getStationName());
+            List<PatrolEntity> patrols = patrolService.getAllPatrolsByStartStation(station);
+            System.out.println("antal patruller på kontrollen: " + patrols.size());
+        }
+    }
 }

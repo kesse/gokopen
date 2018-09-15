@@ -2,8 +2,6 @@ package se.gokopen.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,15 +38,6 @@ public class ScoreServiceImpl implements ScoreService {
         } else {
             throw new ScoreNotSavedException("Det finns redan poäng registrerat för denna patrull på denna kontroll.");
         }
-    }
-
-    @Override
-    @Transactional
-    //TODO ta bort=
-    public List<ScoreEntity> getAllScores() {
-
-        return StreamSupport.stream(scoreRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
     }
 
     @Override

@@ -26,21 +26,21 @@ public class TestReturnOnlyActivePatrols {
 
     @InjectMocks
     private PatrolServiceImpl patrolService;
-    
+
     //TODO funktionen är ändrad till att faktiskt ta med patruller som kommit i mål.
     // Testerna borde ändras för att reflektera detta bättre än att bara ändra själva equalTo
     @Test
-    public void shouldReturnOnlyActivePatrolsFromList(){
+    public void shouldReturnOnlyActivePatrolsFromList() {
         PatrolEntity patrol1 = new PatrolEntity();
         PatrolEntity patrol2 = new PatrolEntity();
         PatrolEntity patrol3 = new PatrolEntity();
         PatrolEntity patrol4 = new PatrolEntity();
-        
+
         patrol1.setStatus(Status.ACTIVE);
         patrol2.setStatus(Status.FINISHED);
         patrol3.setStatus(Status.REGISTERED);
         patrol4.setStatus(Status.RESIGNED);
-        
+
         List<PatrolEntity> patrols = new ArrayList<>();
         patrols.add(patrol1);
         patrols.add(patrol2);
@@ -48,22 +48,22 @@ public class TestReturnOnlyActivePatrols {
         patrols.add(patrol4);
 
         when(patrolRepository.findAll()).thenReturn(patrols);
-        
+
         List<PatrolEntity> onlyActiveAndWaitingPatrols = patrolService.getAllActivePatrolsLeftOnStation(1);
         assertThat(onlyActiveAndWaitingPatrols.size(), is(equalTo(3)));
     }
 
     @Test
-    public void shouldReturnOnlyActivePatrolsFromListAndWorkWithNullStatus(){
+    public void shouldReturnOnlyActivePatrolsFromListAndWorkWithNullStatus() {
         PatrolEntity patrol1 = new PatrolEntity();
         PatrolEntity patrol2 = new PatrolEntity();
         PatrolEntity patrol3 = new PatrolEntity();
         PatrolEntity patrol4 = new PatrolEntity();
-        
+
         patrol1.setStatus(Status.ACTIVE);
         patrol2.setStatus(Status.FINISHED);
         patrol3.setStatus(Status.REGISTERED);
-        
+
         List<PatrolEntity> patrols = new ArrayList<>();
         patrols.add(patrol1);
         patrols.add(patrol2);

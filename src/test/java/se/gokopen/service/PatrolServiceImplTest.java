@@ -19,21 +19,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class PatrolServiceImplTest extends SpringBootTestBase {
-    
+
     @Autowired
     private PatrolService patrolService;
     @Autowired
     private StationService stationService;
-    
+
     @Test
     public void shouldCreatePatrolInDatabase() throws PatrolNotSavedException {
         PatrolEntity patrol = getPatrol(Status.REGISTERED);
 
         patrolService.savePatrol(patrol);
-        
+
         assertNotNull(patrol.getPatrolId());
         assertNotNull(patrol.getDateRegistered());
-        
+
         //Cleaning up
         patrolService.deletePatrol(patrol);
     }
