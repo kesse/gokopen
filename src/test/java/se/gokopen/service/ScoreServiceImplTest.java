@@ -2,6 +2,7 @@ package se.gokopen.service;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import se.gokopen.SpringBootTestBase;
 import se.gokopen.persistence.entity.PatrolEntity;
@@ -13,6 +14,7 @@ import se.gokopen.persistence.exception.ScoreNotSavedException;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ScoreServiceImplTest extends SpringBootTestBase {
 
     private StationEntity station1;

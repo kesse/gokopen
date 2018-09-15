@@ -8,7 +8,5 @@ import se.gokopen.persistence.entity.UserEntity;
 
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
-    UserEntity findByUsername(String username);
-
     List<UserEntity> findAllByOrderByUsername();
 }

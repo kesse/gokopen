@@ -17,26 +17,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    @Transactional
-    public UserEntity getUser(String username) throws UserNotFoundException {
-        UserEntity user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UserNotFoundException("Hittar inte användaren med användarnamnet " + username);
-        }
-
-        return user;
-    }
-
-    @Override
     public void deleteUser(UserEntity user) {
         userRepository.delete(user);
     }
 
     @Override
-    public void deleteUserByUsername(String username) throws UserNotFoundException {
-        UserEntity delUser = getUser(username);
-        deleteUser(delUser);
+    @Transactional
+    public void deleteUserById(int id) throws UserNotFoundException {
+        userRepository.delete(id);
     }
 
     @Override
@@ -62,9 +50,4 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    @Transactional
-    public void deleteUserById(int id) throws UserNotFoundException {
-        userRepository.delete(id);
-    }
 }
