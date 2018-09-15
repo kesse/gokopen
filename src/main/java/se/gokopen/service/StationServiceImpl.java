@@ -8,53 +8,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.exception.StationNotFoundException;
 import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.exception.StationNotFoundException;
 import se.gokopen.persistence.repository.StationRepository;
 
 @Service
 public class StationServiceImpl implements StationService {
-	
-	@Autowired
-	private StationRepository stationRepository;
 
-	@Override
-	@Transactional
-	public void saveStation(StationEntity station) {
-		stationRepository.save(station);
-	}
+    @Autowired
+    private StationRepository stationRepository;
 
-	@Override
-	@Transactional
-	public List<StationEntity> getAllStations() {
+    @Override
+    @Transactional
+    public void saveStation(StationEntity station) {
+        stationRepository.save(station);
+    }
 
-		return StreamSupport.stream(stationRepository.findAll().spliterator(), false)
-				.collect(Collectors.toList());
-	}
+    @Override
+    @Transactional
+    public List<StationEntity> getAllStations() {
 
-	@Override
-	@Transactional
-	public void deleteStation(StationEntity station) {
-		stationRepository.delete(station);
-	}
+        return StreamSupport.stream(stationRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	@Transactional
-	public void deleteStationById(Integer id) {
-		stationRepository.delete(id);
-	}
+    @Override
+    @Transactional
+    public void deleteStation(StationEntity station) {
+        stationRepository.delete(station);
+    }
 
-	@Override
-	@Transactional
-	public StationEntity getStationById(Integer id) throws StationNotFoundException {
+    @Override
+    @Transactional
+    public void deleteStationById(Integer id) {
+        stationRepository.delete(id);
+    }
 
-		StationEntity station = stationRepository.findOne(id);
+    @Override
+    @Transactional
+    public StationEntity getStationById(Integer id) throws StationNotFoundException {
 
-		if (station == null) {
-			throw new StationNotFoundException("Hittar inte kontrollen med id: " + id);
-		}
+        StationEntity station = stationRepository.findOne(id);
 
-		return station;
-	}
+        if (station == null) {
+            throw new StationNotFoundException("Hittar inte kontrollen med id: " + id);
+        }
+
+        return station;
+    }
 
 }

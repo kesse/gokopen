@@ -1,7 +1,6 @@
 package se.gokopen.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.service.ConfigService;
 import se.gokopen.service.PatrolService;
 import se.gokopen.service.TrackService;
@@ -21,26 +20,26 @@ import se.gokopen.service.TrackService;
 @RequestMapping("/public")
 @Controller
 public class PublicController {
-    
+
     @Autowired
     private ConfigService configService;
-    
+
     @Autowired
     private TrackService trackService;
-    
+
     @Autowired
     private PatrolService patrolService;
-    
+
     @RequestMapping(method = RequestMethod.GET)
-    public String startPatrolsByTrack(HttpServletRequest request){
+    public String startPatrolsByTrack(HttpServletRequest request) {
         request.setAttribute("config", configService.getCurrentConfig());
         request.setAttribute("tracks", trackService.getAllTracks());
         return "publicviewresult";
     }
-    
-    @RequestMapping(value="/bytrack/{id}")
-    public ModelAndView startPatrolsByTrack(@PathVariable String id,HttpServletRequest request){
-        
+
+    @RequestMapping(value = "/bytrack/{id}")
+    public ModelAndView startPatrolsByTrack(@PathVariable String id, HttpServletRequest request) {
+
         TrackEntity track = null;
         try {
             track = trackService.getTrackById(Integer.parseInt(id));
@@ -55,7 +54,7 @@ public class PublicController {
         request.setAttribute("config", configService.getCurrentConfig());
         request.setAttribute("tracks", trackService.getAllTracks());
         List<PatrolEntity> patrols = patrolService.getAllPatrolsByTrack(track);
-        return new ModelAndView("publicviewresult","patrols",patrols);
+        return new ModelAndView("publicviewresult", "patrols", patrols);
     }
 
 }

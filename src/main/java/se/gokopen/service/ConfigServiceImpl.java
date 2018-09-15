@@ -14,7 +14,7 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Autowired
     private ConfigRepository configRepository;
-    
+
     @Override
     @Transactional
     public ConfigEntity getCurrentConfig() {
@@ -31,10 +31,10 @@ public class ConfigServiceImpl implements ConfigService {
 
         return configIterator.next();
     }
-    
+
     @Override
     @Transactional
-    public void saveConfig(ConfigEntity config){
+    public void saveConfig(ConfigEntity config) {
         configRepository.save(config);
     }
 }

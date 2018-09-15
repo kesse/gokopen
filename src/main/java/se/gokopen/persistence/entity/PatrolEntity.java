@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,18 +15,18 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.annotations.Cascade;
 
 import se.gokopen.model.Status;
 
@@ -49,11 +48,11 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String note;
     private Set<ScoreEntity> scores = new LinkedHashSet<ScoreEntity>();
-    @NotEmpty (message = "Missa inte att fylla i kontaktperson")
+    @NotEmpty(message = "Missa inte att fylla i kontaktperson")
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String leaderContact;
-    @NotEmpty (message = "E-postadress krävs")
-    @Email (message = "Se till att e-postadressen är korrekt")
+    @NotEmpty(message = "E-postadress krävs")
+    @Email(message = "Se till att e-postadressen är korrekt")
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String leaderContactMail;
     @NotEmpty(message = "Ett telefonnummer vill vi ha också")
@@ -215,7 +214,7 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
         this.status = status;
     }
 
-    @Column(name="date_registered")
+    @Column(name = "date_registered")
     public Date getDateRegistered() {
         return dateRegistered;
     }
@@ -288,23 +287,23 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
         }
         return lastSavedScore;
     }
-    
+
     @Transient
     public Integer getNumberOfMaxPoints() {
         return getNumberOfXPoints(0);
     }
-    
+
     @Transient
     public Integer getNumberOfXPoints(int x) {
         int numberOfXPoints = 0;
-        for(ScoreEntity score:scores) {
+        for (ScoreEntity score : scores) {
             StationEntity currentStation = score.getStation();
-            if(null == currentStation.getWaypoint()) {
+            if (null == currentStation.getWaypoint()) {
                 currentStation.setWaypoint(false);
             }
-            if((!score.getStation().getWaypoint()) && ((score.getStation().getMaxScore()-x>0))){
-                int maxScoreOnStation = score.getStation().getMaxScore()-x;
-                if(score.getScorePoint() == maxScoreOnStation) {
+            if ((!score.getStation().getWaypoint()) && ((score.getStation().getMaxScore() - x > 0))) {
+                int maxScoreOnStation = score.getStation().getMaxScore() - x;
+                if (score.getScorePoint() == maxScoreOnStation) {
                     numberOfXPoints++;
                 }
             }
@@ -318,12 +317,12 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
         if (comp == 0) {
             comp = p.getTotalScorePoint().compareTo(getTotalScorePoint());
         }
-        
-        if(comp == 0) {
+
+        if (comp == 0) {
             //loopar igenom så många poäng vi vill, satt till max 50
-            for(int i = 0;i<=50;i++) {
+            for (int i = 0; i <= 50; i++) {
                 comp = p.getNumberOfXPoints(i).compareTo(getNumberOfXPoints(i));
-                if(comp != 0) {
+                if (comp != 0) {
                     break;
                 }
             }

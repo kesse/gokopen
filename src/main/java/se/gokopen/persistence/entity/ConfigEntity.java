@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="config")
+@Table(name = "config")
 public class ConfigEntity {
     private Integer id;
     private String name;
@@ -24,13 +24,13 @@ public class ConfigEntity {
     private String confirmMessage;
     private Boolean allowPublicRegistration;
 
-    public ConfigEntity(){
-        
+    public ConfigEntity() {
+
     }
 
     @Id
     @GeneratedValue
-    @Column(name="id", nullable=false)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -38,8 +38,8 @@ public class ConfigEntity {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    @Column (name="name")
+
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -48,7 +48,7 @@ public class ConfigEntity {
         this.name = name;
     }
 
-    @Column (name="allowpublicresult")
+    @Column(name = "allowpublicresult")
     public Boolean getAllowPublicResult() {
         return allowPublicResult;
     }
@@ -57,7 +57,7 @@ public class ConfigEntity {
         this.allowPublicResult = allowPublicResult;
     }
 
-    @Column (name="phone")
+    @Column(name = "phone")
     public String getPhone() {
         return phone;
     }
@@ -65,10 +65,10 @@ public class ConfigEntity {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column (name="lastregisterday")
+    @Column(name = "lastregisterday")
     public Date getLastRegisterDay() {
         return lastRegisterDay;
     }
@@ -77,7 +77,7 @@ public class ConfigEntity {
         this.lastRegisterDay = lastRegisterDay;
     }
 
-    @Column (name="registerinfo", length=600)
+    @Column(name = "registerinfo", length = 600)
     public String getRegisterInfo() {
         return registerInfo;
     }
@@ -86,7 +86,7 @@ public class ConfigEntity {
         this.registerInfo = registerInfo;
     }
 
-    @Column (name="maxpatrols")
+    @Column(name = "maxpatrols")
     public Integer getMaxPatrols() {
         return maxPatrols;
     }
@@ -95,7 +95,7 @@ public class ConfigEntity {
         this.maxPatrols = maxPatrols;
     }
 
-    @Column (name="confirmmessage", length=600)
+    @Column(name = "confirmmessage", length = 600)
     public String getConfirmMessage() {
         return confirmMessage;
     }
@@ -105,7 +105,7 @@ public class ConfigEntity {
     }
 
 
-    @Column (name="allowpublicregistration")
+    @Column(name = "allowpublicregistration")
     public Boolean getAllowPublicRegistration() {
         return allowPublicRegistration;
     }

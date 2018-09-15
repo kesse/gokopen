@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.exception.PatrolNotFoundException;
-import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.model.Status;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.ScoreEntity;
 import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.persistence.repository.PatrolRepository;
 
 @Service
@@ -30,7 +30,7 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public void savePatrol(PatrolEntity patrol) throws PatrolNotSavedException {
-        if(isNewPatrol(patrol)) {
+        if (isNewPatrol(patrol)) {
             Date registered = new Date();
             patrol.setDateRegistered(registered);
         }
@@ -38,7 +38,7 @@ public class PatrolServiceImpl implements PatrolService {
     }
 
     private boolean isNewPatrol(PatrolEntity patrol) {
-        if (patrol.getPatrolId()==null || patrol.getPatrolId()==0) {
+        if (patrol.getPatrolId() == null || patrol.getPatrolId() == 0) {
             return true;
         } else {
             return false;
@@ -90,12 +90,12 @@ public class PatrolServiceImpl implements PatrolService {
         List<PatrolEntity> allPatrols = getAllPatrols();
 
         Iterator<PatrolEntity> itt = allPatrols.iterator();
-        while(itt.hasNext()){
+        while (itt.hasNext()) {
             PatrolEntity patrol = (PatrolEntity) itt.next();
             Iterator<ScoreEntity> scores = patrol.getScores().iterator();
-            while(scores.hasNext()){
+            while (scores.hasNext()) {
                 ScoreEntity score = scores.next();
-                if(score.getStation().getStationId()==stationId){
+                if (score.getStation().getStationId() == stationId) {
                     itt.remove();
                     break;
                 }
@@ -149,8 +149,8 @@ public class PatrolServiceImpl implements PatrolService {
 
     public List<PatrolEntity> getActiveAndWaitingPatolsFromList(List<PatrolEntity> patrols) {
         List<PatrolEntity> onlyActivePatrols = new ArrayList<PatrolEntity>();
-        for(PatrolEntity patrol:patrols){
-            if(patrol.getStatus()!=null && (patrol.getStatus().equals(Status.REGISTERED) || patrol.getStatus().equals(Status.ACTIVE) || patrol.getStatus().equals(Status.FINISHED) )){
+        for (PatrolEntity patrol : patrols) {
+            if (patrol.getStatus() != null && (patrol.getStatus().equals(Status.REGISTERED) || patrol.getStatus().equals(Status.ACTIVE) || patrol.getStatus().equals(Status.FINISHED))) {
                 onlyActivePatrols.add(patrol);
             }
         }
@@ -166,7 +166,7 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public void saveAllpatrols(List<PatrolEntity> patrols) throws PatrolNotSavedException {
-        for(PatrolEntity patrol:patrols){
+        for (PatrolEntity patrol : patrols) {
             this.savePatrol(patrol);
         }
 

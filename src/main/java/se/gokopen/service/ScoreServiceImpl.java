@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.ScoreEntity;
 import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
 import se.gokopen.persistence.repository.ScoreRepository;
@@ -88,8 +88,8 @@ public class ScoreServiceImpl implements ScoreService {
 
         return score;
     }
-    
-    private boolean hasScoreBeenSavedBefore(ScoreEntity score){
+
+    private boolean hasScoreBeenSavedBefore(ScoreEntity score) {
         PatrolEntity patrol = score.getPatrol();
         StationEntity station = score.getStation();
 
@@ -99,12 +99,12 @@ public class ScoreServiceImpl implements ScoreService {
             System.out.println("Hittar inget poäng, ok att spara");
             return false;
         }
-        
+
         return true;
     }
 
-    private boolean isScoreInEditMode(ScoreEntity score){
-        if (score.getScoreId()==null || score.getScoreId()==0){
+    private boolean isScoreInEditMode(ScoreEntity score) {
+        if (score.getScoreId() == null || score.getScoreId() == 0) {
             return false;
         } else {
             return true;

@@ -8,7 +8,7 @@ import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.entity.TrackEntity;
 
-public interface PatrolRepository  extends CrudRepository<PatrolEntity, Integer> {
+public interface PatrolRepository extends CrudRepository<PatrolEntity, Integer> {
 
     List<PatrolEntity> findAllByOrderByTrack();
 

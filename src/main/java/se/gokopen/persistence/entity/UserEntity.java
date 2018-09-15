@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class UserEntity {
     private Integer id;
     private String username;
@@ -17,16 +17,16 @@ public class UserEntity {
     private boolean enabled = true;
     private String role;
 
-    
-    public UserEntity(){
-        
+
+    public UserEntity() {
+
     }
-    
-    
+
+
     @Id
     @SequenceGenerator(name = "userSeqGen", sequenceName = "USER_SEQ", initialValue = 100, allocationSize = 5)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "userSeqGen")
-    @Column(name="userid", nullable=false)
+    @Column(name = "userid", nullable = false)
     public Integer getId() {
         return id;
     }
@@ -35,8 +35,8 @@ public class UserEntity {
         this.id = id;
     }
 
-    
-    @Column(name="username", length=45,nullable=false)
+
+    @Column(name = "username", length = 45, nullable = false)
     public String getUsername() {
         return username;
     }
@@ -46,7 +46,7 @@ public class UserEntity {
         this.username = username;
     }
 
-    @Column(name="password", length=45,nullable=false)
+    @Column(name = "password", length = 45, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -56,7 +56,7 @@ public class UserEntity {
         this.password = password;
     }
 
-    @Column(name="enabled")
+    @Column(name = "enabled")
     public boolean isEnabled() {
         return enabled;
     }
@@ -67,11 +67,11 @@ public class UserEntity {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Aktell användare: " + id + username + " lösen: " + password + " enabled " + enabled;
     }
 
-    @Column(name="role")
+    @Column(name = "role")
     public String getRole() {
         return role;
     }

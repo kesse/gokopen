@@ -6,13 +6,13 @@ import se.gokopen.persistence.entity.TrackEntity;
 import se.gokopen.persistence.exception.TrackNotFoundException;
 
 public interface TrackService {
-	void saveTrack(TrackEntity track);
+    void saveTrack(TrackEntity track);
 
-	List<TrackEntity> getAllTracks();
+    List<TrackEntity> getAllTracks();
 
-	void deleteTrack(TrackEntity track);
+    void deleteTrack(TrackEntity track);
 
-	void deleteTrackById(Integer id);
+    void deleteTrackById(Integer id);
 
-	TrackEntity getTrackById(Integer id) throws TrackNotFoundException;
+    TrackEntity getTrackById(Integer id) throws TrackNotFoundException;
 }

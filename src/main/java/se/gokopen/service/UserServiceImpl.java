@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Override
     @Transactional
     public UserEntity getUser(String username) throws UserNotFoundException {
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findOne(id);
 
         if (user == null) {
-            throw new UserNotFoundException("Hittar inte användaren med id "+ id);
+            throw new UserNotFoundException("Hittar inte användaren med id " + id);
         }
 
         return user;

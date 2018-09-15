@@ -10,129 +10,129 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="station")
+@Table(name = "station")
 public class StationEntity {
-	private Integer stationId;
-	private int stationNumber;
-	private String stationName;
-	private int minScore;
-	private int maxScore;
-	private int minStyleScore;
-	private int maxStyleScore;
-	private String stationContact;
-	private String stationPhonenumber;
-	private String stationUser;
-	private Boolean waypoint = false; 
-	
-	public StationEntity(){
-		
-	}
+    private Integer stationId;
+    private int stationNumber;
+    private String stationName;
+    private int minScore;
+    private int maxScore;
+    private int minStyleScore;
+    private int maxStyleScore;
+    private String stationContact;
+    private String stationPhonenumber;
+    private String stationUser;
+    private Boolean waypoint = false;
 
-	@Id
-	@SequenceGenerator(name = "stationSeqGen", sequenceName = "STATION_SEQ", initialValue = 1, allocationSize = 5)
+    public StationEntity() {
+
+    }
+
+    @Id
+    @SequenceGenerator(name = "stationSeqGen", sequenceName = "STATION_SEQ", initialValue = 1, allocationSize = 5)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "stationSeqGen")
-	@Column(name="stationid", nullable=false)
-	public Integer getStationId() {
-		return stationId;
-	}
+    @Column(name = "stationid", nullable = false)
+    public Integer getStationId() {
+        return stationId;
+    }
 
-	public void setStationId(Integer stationId) {
-		this.stationId = stationId;
-	}
+    public void setStationId(Integer stationId) {
+        this.stationId = stationId;
+    }
 
-	@Column(name="stationnumber", length=4)
-	public int getStationNumber() {
-		return stationNumber;
-	}
+    @Column(name = "stationnumber", length = 4)
+    public int getStationNumber() {
+        return stationNumber;
+    }
 
-	public void setStationNumber(int stationNumber) {
-		this.stationNumber = stationNumber;
-	}
+    public void setStationNumber(int stationNumber) {
+        this.stationNumber = stationNumber;
+    }
 
-	@Column(name="stationname", length=100)
-	public String getStationName() {
-		return stationName;
-	}
+    @Column(name = "stationname", length = 100)
+    public String getStationName() {
+        return stationName;
+    }
 
-	public void setStationName(String stationName) {
-		this.stationName = stationName;
-	}
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
 
-	@Column(name="minscore", length=4)
-	public int getMinScore() {
-		return minScore;
-	}
+    @Column(name = "minscore", length = 4)
+    public int getMinScore() {
+        return minScore;
+    }
 
-	public void setMinScore(int minScore) {
-		this.minScore = minScore;
-	}
+    public void setMinScore(int minScore) {
+        this.minScore = minScore;
+    }
 
-	@Column(name="maxscore", length=4)
-	public int getMaxScore() {
-		return maxScore;
-	}
+    @Column(name = "maxscore", length = 4)
+    public int getMaxScore() {
+        return maxScore;
+    }
 
-	public void setMaxScore(int maxScore) {
-		this.maxScore = maxScore;
-	}
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
+    }
 
-	@Column(name="stationcontact", length=50)
-	public String getStationContact() {
-		return stationContact;
-	}
+    @Column(name = "stationcontact", length = 50)
+    public String getStationContact() {
+        return stationContact;
+    }
 
-	public void setStationContact(String stationContact) {
-		this.stationContact = stationContact;
-	}
+    public void setStationContact(String stationContact) {
+        this.stationContact = stationContact;
+    }
 
-	@Column(name="stationphone", length=50)
-	public String getStationPhonenumber() {
-		return stationPhonenumber;
-	}
+    @Column(name = "stationphone", length = 50)
+    public String getStationPhonenumber() {
+        return stationPhonenumber;
+    }
 
-	public void setStationPhonenumber(String stationPhonenumber) {
-		this.stationPhonenumber = stationPhonenumber;
-	}
-	
-	
-	@Column(name="minstylescore", length=4)
-	public int getMinStyleScore() {
-		return minStyleScore;
-	}
+    public void setStationPhonenumber(String stationPhonenumber) {
+        this.stationPhonenumber = stationPhonenumber;
+    }
 
-	public void setMinStyleScore(int minStyleScore) {
-		this.minStyleScore = minStyleScore;
-	}
 
-	@Column(name="maxstylescore", length=4)
-	public int getMaxStyleScore() {
-		return maxStyleScore;
-	}
+    @Column(name = "minstylescore", length = 4)
+    public int getMinStyleScore() {
+        return minStyleScore;
+    }
 
-	public void setMaxStyleScore(int maxStyleScore) {
-		this.maxStyleScore = maxStyleScore;
-	}
-	
-	
-	public void setStationUser(String stationUser) {
-		this.stationUser = stationUser;
-	}
+    public void setMinStyleScore(int minStyleScore) {
+        this.minStyleScore = minStyleScore;
+    }
 
-	@Column(name="stationuser", length=16)
-	public String getStationUser() {
-		return stationUser;
-	}
-	
-	@Column(name="waypoint")
-	public Boolean getWaypoint() {
-		return waypoint;
-	}
+    @Column(name = "maxstylescore", length = 4)
+    public int getMaxStyleScore() {
+        return maxStyleScore;
+    }
 
-	public void setWaypoint(Boolean waypoint) {
-		this.waypoint = waypoint;
-	}
-	
-	@Override
+    public void setMaxStyleScore(int maxStyleScore) {
+        this.maxStyleScore = maxStyleScore;
+    }
+
+
+    public void setStationUser(String stationUser) {
+        this.stationUser = stationUser;
+    }
+
+    @Column(name = "stationuser", length = 16)
+    public String getStationUser() {
+        return stationUser;
+    }
+
+    @Column(name = "waypoint")
+    public Boolean getWaypoint() {
+        return waypoint;
+    }
+
+    public void setWaypoint(Boolean waypoint) {
+        this.waypoint = waypoint;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(stationId);
     }

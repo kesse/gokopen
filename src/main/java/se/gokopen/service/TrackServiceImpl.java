@@ -8,53 +8,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.persistence.repository.TrackRepository;
 
 @Service
 public class TrackServiceImpl implements TrackService {
 
-	@Autowired
-	private TrackRepository trackRepository;
-	
-	@Override
-	@Transactional
-	public void saveTrack(TrackEntity track) {
-		trackRepository.save(track);
-	}
+    @Autowired
+    private TrackRepository trackRepository;
 
-	@Override
-	@Transactional
-	public List<TrackEntity> getAllTracks() {
+    @Override
+    @Transactional
+    public void saveTrack(TrackEntity track) {
+        trackRepository.save(track);
+    }
 
-		return StreamSupport.stream(trackRepository.findAll().spliterator(), false)
-				.collect(Collectors.toList());
-	}
+    @Override
+    @Transactional
+    public List<TrackEntity> getAllTracks() {
 
-	@Override
-	@Transactional
-	public void deleteTrack(TrackEntity track) {
-		trackRepository.delete(track);
-	}
+        return StreamSupport.stream(trackRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	@Transactional
-	public void deleteTrackById(Integer id) {
-		trackRepository.delete(id);
-	}
+    @Override
+    @Transactional
+    public void deleteTrack(TrackEntity track) {
+        trackRepository.delete(track);
+    }
 
-	@Override
-	@Transactional
-	public TrackEntity getTrackById(Integer id) throws TrackNotFoundException {
+    @Override
+    @Transactional
+    public void deleteTrackById(Integer id) {
+        trackRepository.delete(id);
+    }
 
-		TrackEntity track = trackRepository.findOne(id);
+    @Override
+    @Transactional
+    public TrackEntity getTrackById(Integer id) throws TrackNotFoundException {
 
-		if (track == null) {
-			throw new TrackNotFoundException("Hittar inte spåret med id: " + id);
-		}
+        TrackEntity track = trackRepository.findOne(id);
 
-		return track;
-	}
+        if (track == null) {
+            throw new TrackNotFoundException("Hittar inte spåret med id: " + id);
+        }
+
+        return track;
+    }
 
 }

@@ -6,13 +6,13 @@ import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.exception.StationNotFoundException;
 
 public interface StationService {
-	void saveStation(StationEntity station);
+    void saveStation(StationEntity station);
 
-	List<StationEntity> getAllStations();
+    List<StationEntity> getAllStations();
 
-	void deleteStation(StationEntity station);
+    void deleteStation(StationEntity station);
 
-	void deleteStationById(Integer id);
+    void deleteStationById(Integer id);
 
-	StationEntity getStationById(Integer id) throws StationNotFoundException;
+    StationEntity getStationById(Integer id) throws StationNotFoundException;
 }

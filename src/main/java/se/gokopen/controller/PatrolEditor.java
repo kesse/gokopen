@@ -2,8 +2,8 @@ package se.gokopen.controller;
 
 import java.beans.PropertyEditorSupport;
 
-import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.service.PatrolService;
 
 public class PatrolEditor extends PropertyEditorSupport {
