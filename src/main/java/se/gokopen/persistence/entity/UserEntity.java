@@ -17,12 +17,6 @@ public class UserEntity {
     private boolean enabled = true;
     private String role;
 
-
-    public UserEntity() {
-
-    }
-
-
     @Id
     @SequenceGenerator(name = "userSeqGen", sequenceName = "USER_SEQ", initialValue = 100, allocationSize = 5)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "userSeqGen")

@@ -24,10 +24,6 @@ public class StationEntity {
     private String stationUser;
     private Boolean waypoint = false;
 
-    public StationEntity() {
-
-    }
-
     @Id
     @SequenceGenerator(name = "stationSeqGen", sequenceName = "STATION_SEQ", initialValue = 1, allocationSize = 5)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "stationSeqGen")

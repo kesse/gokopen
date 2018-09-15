@@ -23,10 +23,6 @@ public class ScoreEntity {
     private Date lastSaved;
     private boolean visitedWaypoint;
 
-    public ScoreEntity() {
-
-    }
-
     @Id
     @SequenceGenerator(name = "scoreSeqGen", sequenceName = "SCORE_SEQ", initialValue = 1, allocationSize = 10)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "scoreSeqGen")
@@ -35,11 +31,9 @@ public class ScoreEntity {
         return scoreId;
     }
 
-
     public void setScoreId(Integer scoreId) {
         this.scoreId = scoreId;
     }
-
 
     @ManyToOne
     @JoinColumn(name = "fk_station")

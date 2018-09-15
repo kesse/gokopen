@@ -1,7 +1,5 @@
 package se.gokopen.service;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,24 +9,23 @@ import org.junit.Test;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.StationEntity;
 
+import static org.junit.Assert.assertEquals;
 
 public class TestDistributePatrols {
 	private static final String KONTROLL1_NAME = "Kontroll 1";
 	private static final String KONTROLL2_NAME = "Kontroll 2";
 	private static final String KONTROLL3_NAME = "Kontroll 3";
-	List<PatrolEntity> patrols = new ArrayList<PatrolEntity>();
-	PatrolEntity patrol1;
-	PatrolEntity patrol2;
-	PatrolEntity patrol3;
-	PatrolEntity patrol4;
-	PatrolEntity patrol5;
-	
-	List<StationEntity> stations = new ArrayList<StationEntity>();
-	StationEntity station1;
-	StationEntity station2;
-	StationEntity station3;
-	StationEntity station4;
-	
+	private List<PatrolEntity> patrols = new ArrayList<>();
+	private PatrolEntity patrol1;
+	private PatrolEntity patrol2;
+	private PatrolEntity patrol3;
+	private PatrolEntity patrol4;
+
+	private List<StationEntity> stations = new ArrayList<>();
+	private StationEntity station1;
+	private StationEntity station2;
+	private StationEntity station3;
+
 	@Before
 	public void init(){
 		patrol1 = new PatrolEntity();
@@ -44,8 +41,6 @@ public class TestDistributePatrols {
 		patrols.add(patrol2);
 		patrols.add(patrol3);
 		patrols.add(patrol4);
-		
-		
 	}
 	
 	@Test

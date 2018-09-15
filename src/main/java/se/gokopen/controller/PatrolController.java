@@ -92,10 +92,7 @@ public class PatrolController {
         PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -110,13 +107,10 @@ public class PatrolController {
         PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException e) {
             e.printStackTrace();
         }
+
         request.setAttribute("backurl", request.getContextPath() + "/reports/bytrack/" + trackid);
         return new ModelAndView("viewpatrol", "patrol", patrol);
 
@@ -127,13 +121,10 @@ public class PatrolController {
         PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException e) {
             e.printStackTrace();
         }
+
         request.setAttribute("backurl", request.getContextPath() + "/reports/patrols");
         return new ModelAndView("viewpatrol", "patrol", patrol);
 
@@ -152,13 +143,10 @@ public class PatrolController {
         PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (PatrolNotFoundException | NumberFormatException e) {
             e.printStackTrace();
         }
+
         List<StationEntity> stations = stationService.getAllStations();
         ModelMap map = new ModelMap();
         map.put("patrol", patrol);
@@ -173,8 +161,6 @@ public class PatrolController {
         try {
             patrolService.deletePatrolById(Integer.parseInt(id));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -191,7 +177,7 @@ public class PatrolController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setPaid(true);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }
@@ -203,7 +189,7 @@ public class PatrolController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setPaid(false);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }

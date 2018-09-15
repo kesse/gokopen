@@ -24,10 +24,6 @@ public class ConfigEntity {
     private String confirmMessage;
     private Boolean allowPublicRegistration;
 
-    public ConfigEntity() {
-
-    }
-
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)

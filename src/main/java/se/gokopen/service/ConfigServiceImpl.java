@@ -24,7 +24,7 @@ public class ConfigServiceImpl implements ConfigService {
 
         if (!configIterator.hasNext()) {
             ConfigEntity config = new ConfigEntity();
-            config.setName("Gök Open");
+            config.setName("GÖK Open");
 
             return config;
         }

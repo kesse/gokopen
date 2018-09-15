@@ -16,9 +16,9 @@ public interface PatrolService {
 
     List<PatrolEntity> getAllPatrols();
 
-    void deletePatrol(PatrolEntity patrol) throws PatrolNotFoundException;
+    void deletePatrol(PatrolEntity patrol);
 
-    void deletePatrolById(Integer id) throws PatrolNotFoundException;
+    void deletePatrolById(Integer id);
 
     PatrolEntity getPatrolById(Integer id) throws PatrolNotFoundException;
 
@@ -37,8 +37,6 @@ public interface PatrolService {
     List<PatrolEntity> getAllPatrolsSortedByScore();
 
     List<PatrolEntity> getAllActivePatrolsLeftOnStation(Integer stationId);
-
-    List<PatrolEntity> getActiveAndWaitingPatolsFromList(List<PatrolEntity> patrols);
 
     List<PatrolEntity> getAllPatrolsCriteria();
 

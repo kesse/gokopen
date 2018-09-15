@@ -14,11 +14,6 @@ public class TrackEntity {
     private Integer trackId;
     private String trackName;
 
-
-    public TrackEntity() {
-
-    }
-
     @Id
     @SequenceGenerator(name = "trackSeqGen", sequenceName = "TRACK_SEQ", initialValue = 100, allocationSize = 5)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "trackSeqGen")

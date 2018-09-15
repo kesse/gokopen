@@ -72,7 +72,7 @@ public class StartFinishController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.ACTIVE);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +84,7 @@ public class StartFinishController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.FINISHED);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }
@@ -96,7 +96,7 @@ public class StartFinishController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.RESIGNED);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }
@@ -108,11 +108,10 @@ public class StartFinishController {
             PatrolEntity patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.REGISTERED);
             patrolService.savePatrol(patrol);
-        } catch (PatrolNotSavedException | NumberFormatException | PatrolNotFoundException e) {
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
     }
-
 
     @RequestMapping(value = "/viewpatrol/{id}")
     public ModelAndView viewPatrolFromPatrolList(@PathVariable String id, HttpServletRequest request) {
@@ -124,26 +123,17 @@ public class StartFinishController {
         }
         request.setAttribute("backurl", request.getContextPath() + "/startfinish");
         return new ModelAndView("viewpatrol", "patrol", patrol);
-
     }
-
 
     //gamla, länkbaserade lösningen - borde kunna tas bort!
     @RequestMapping(value = "/movetoactive/{id}", method = RequestMethod.GET)
     public ModelAndView moveToActive(@PathVariable String id, HttpServletRequest request) {
-        PatrolEntity patrol = null;
+        PatrolEntity patrol;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.ACTIVE);
             patrolService.savePatrol(patrol);
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotSavedException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
 
@@ -153,19 +143,12 @@ public class StartFinishController {
 
     @RequestMapping(value = "/movetofinished/{id}", method = RequestMethod.GET)
     public ModelAndView moveToFinish(@PathVariable String id, HttpServletRequest request) {
-        PatrolEntity patrol = null;
+        PatrolEntity patrol;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.FINISHED);
             patrolService.savePatrol(patrol);
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotSavedException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
 
@@ -175,19 +158,12 @@ public class StartFinishController {
 
     @RequestMapping(value = "/movetoresigned/{id}", method = RequestMethod.GET)
     public ModelAndView moveToResigned(@PathVariable String id, HttpServletRequest request) {
-        PatrolEntity patrol = null;
+        PatrolEntity patrol;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.RESIGNED);
             patrolService.savePatrol(patrol);
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotSavedException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
 
@@ -197,19 +173,12 @@ public class StartFinishController {
 
     @RequestMapping(value = "/movetoregistered/{id}", method = RequestMethod.GET)
     public ModelAndView moveToRegistered(@PathVariable String id, HttpServletRequest request) {
-        PatrolEntity patrol = null;
+        PatrolEntity patrol;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(id));
             patrol.setStatus(Status.REGISTERED);
             patrolService.savePatrol(patrol);
-        } catch (NumberFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (PatrolNotSavedException e) {
-            // TODO Auto-generated catch block
+        } catch (NumberFormatException | PatrolNotFoundException | PatrolNotSavedException e) {
             e.printStackTrace();
         }
 

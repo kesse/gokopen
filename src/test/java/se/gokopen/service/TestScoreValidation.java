@@ -2,16 +2,12 @@ package se.gokopen.service;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import se.gokopen.Application;
+import se.gokopen.SpringBootTestBase;
 import se.gokopen.persistence.entity.PatrolEntity;
 import se.gokopen.persistence.entity.ScoreEntity;
 import se.gokopen.persistence.entity.StationEntity;
-import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.PatrolNotSavedException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
@@ -19,9 +15,7 @@ import se.gokopen.persistence.exception.ScoreNotSavedException;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes= Application.class, webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestScoreValidation {
+public class TestScoreValidation extends SpringBootTestBase {
 
     private StationEntity station1;
     private StationEntity station2;
@@ -117,7 +111,7 @@ public class TestScoreValidation {
             
             patrolService.deletePatrol(patrol1);
             patrolService.deletePatrol(patrol2);
-        } catch (ScoreNotFoundException | PatrolNotFoundException e) {
+        } catch (ScoreNotFoundException e) {
             e.printStackTrace();
         }
     }

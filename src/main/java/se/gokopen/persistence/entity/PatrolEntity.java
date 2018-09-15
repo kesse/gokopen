@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -47,7 +48,7 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
     private String members;
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String note;
-    private Set<ScoreEntity> scores = new LinkedHashSet<ScoreEntity>();
+    private Set<ScoreEntity> scores = new LinkedHashSet<>();
     @NotEmpty(message = "Missa inte att fylla i kontaktperson")
     @SafeHtml(message = "ingen knepig html eller js tack")
     private String leaderContact;
@@ -61,11 +62,13 @@ public class PatrolEntity implements Comparable<PatrolEntity> {
     private Status status;
     private Date dateRegistered;
     private Boolean paid = false;
-    private ScoreEntity latestScore;
     private StationEntity startStation;
 
-    public PatrolEntity() {
-
+    @PrePersist
+    void onPrePersist() {
+        if (dateRegistered == null) {
+            dateRegistered = new Date();
+        }
     }
 
     @Id
