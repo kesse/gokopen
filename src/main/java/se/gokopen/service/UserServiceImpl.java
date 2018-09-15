@@ -1,6 +1,7 @@
 package se.gokopen.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUserById(int id) throws UserNotFoundException {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -41,13 +42,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserEntity getUserById(Integer id) throws UserNotFoundException {
-        UserEntity user = userRepository.findOne(id);
+        Optional<UserEntity> user = userRepository.findById(id);
 
-        if (user == null) {
+        if (!user.isPresent()) {
             throw new UserNotFoundException("Hittar inte användaren med id " + id);
         }
 
-        return user;
+        return user.get();
     }
 
 }

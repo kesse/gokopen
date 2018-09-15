@@ -1,7 +1,9 @@
 package se.gokopen.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,8 @@ import se.gokopen.persistence.entity.StationEntity;
 import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotFoundException;
 import se.gokopen.persistence.exception.ScoreNotSavedException;
+import se.gokopen.persistence.exception.StationNotFoundException;
 import se.gokopen.persistence.repository.ScoreRepository;
-import se.gokopen.persistence.repository.StationRepository;
 
 @Service
 public class ScoreServiceImpl implements ScoreService {
@@ -23,7 +25,7 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreRepository scoreRepository;
 
     @Autowired
-    private StationRepository stationRepository;
+    private StationService stationService;
 
     @Autowired
     private PatrolService patrolService;
@@ -63,19 +65,19 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     @Transactional
     public void deleteScoreById(Integer id) {
-        scoreRepository.delete(id);
+        scoreRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public ScoreEntity getScoreById(Integer id) throws ScoreNotFoundException {
-        ScoreEntity score = scoreRepository.findOne(id);
+        Optional<ScoreEntity> score = scoreRepository.findById(id);
 
-        if (score == null) {
+        if (!score.isPresent()) {
             throw new ScoreNotFoundException("Hittar inte poäng med id: " + id);
         }
 
-        return score;
+        return score.get();
     }
 
     private boolean hasScoreBeenSavedBefore(ScoreEntity score) {
@@ -102,7 +104,12 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public List<ScoreEntity> getScoreOnStation(Integer stationId) {
-        StationEntity station = stationRepository.findOne(stationId);
+        StationEntity station;
+        try {
+            station = stationService.getStationById(stationId);
+        } catch (StationNotFoundException e) {
+            return new ArrayList<>();
+        }
 
         return scoreRepository.findAllByStation(station);
     }

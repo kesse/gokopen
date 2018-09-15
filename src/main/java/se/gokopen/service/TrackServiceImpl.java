@@ -1,6 +1,7 @@
 package se.gokopen.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,20 +42,20 @@ public class TrackServiceImpl implements TrackService {
     @Override
     @Transactional
     public void deleteTrackById(Integer id) {
-        trackRepository.delete(id);
+        trackRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public TrackEntity getTrackById(Integer id) throws TrackNotFoundException {
 
-        TrackEntity track = trackRepository.findOne(id);
+        Optional<TrackEntity> track = trackRepository.findById(id);
 
-        if (track == null) {
+        if (!track.isPresent()) {
             throw new TrackNotFoundException("Hittar inte spåret med id: " + id);
         }
 
-        return track;
+        return track.get();
     }
 
 }

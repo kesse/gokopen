@@ -1,6 +1,7 @@
 package se.gokopen.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,20 +42,20 @@ public class StationServiceImpl implements StationService {
     @Override
     @Transactional
     public void deleteStationById(Integer id) {
-        stationRepository.delete(id);
+        stationRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public StationEntity getStationById(Integer id) throws StationNotFoundException {
 
-        StationEntity station = stationRepository.findOne(id);
+        Optional<StationEntity> station = stationRepository.findById(id);
 
-        if (station == null) {
+        if (!station.isPresent()) {
             throw new StationNotFoundException("Hittar inte kontrollen med id: " + id);
         }
 
-        return station;
+        return station.get();
     }
 
 }

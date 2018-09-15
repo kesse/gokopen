@@ -3,6 +3,7 @@ package se.gokopen.service;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.validation.ConstraintViolationException;
@@ -55,19 +56,19 @@ public class PatrolServiceImpl implements PatrolService {
     @Override
     @Transactional
     public void deletePatrolById(Integer id) {
-        patrolRepository.delete(id);
+        patrolRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public PatrolEntity getPatrolById(Integer id) throws PatrolNotFoundException {
-        PatrolEntity patrol = patrolRepository.findOne(id);
+        Optional<PatrolEntity> patrol = patrolRepository.findById(id);
 
-        if (patrol == null) {
+        if (!patrol.isPresent()) {
             throw new PatrolNotFoundException("Hittar inte patrullen med id: " + id);
         }
 
-        return patrol;
+        return patrol.get();
     }
 
     @Override
@@ -144,7 +145,7 @@ public class PatrolServiceImpl implements PatrolService {
     @Transactional
     public void saveAllpatrols(List<PatrolEntity> patrols) throws PatrolNotSavedException {
         try {
-            patrolRepository.save(patrols);
+            patrolRepository.saveAll(patrols);
         } catch (ConstraintViolationException e) {
             e.printStackTrace();
             throw new PatrolNotSavedException(e.getMessage());
