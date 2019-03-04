@@ -12,7 +12,7 @@
 
 	<div class="nav-box">
 		<h1>Användare</h1>
-		<form:form commandName="user" method="post"
+		<form:form modelAttribute="user" method="post"
 			action="${pageContext.request.contextPath}/admin/user/save"
 			cssClass="form-general">
 			<form:hidden path="id" id="id" />

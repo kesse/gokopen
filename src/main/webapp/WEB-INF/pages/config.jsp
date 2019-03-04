@@ -31,7 +31,7 @@
 		</c:if>
 	</div>
 	</div>
-	<form:form commandName="config" method="post"
+	<form:form modelAttribute="config" method="post"
 		action="${pageContext.request.contextPath}/admin/config"
 		cssClass="form-general">
 		<form:hidden path="id" id="id" />

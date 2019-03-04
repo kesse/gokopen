@@ -42,7 +42,7 @@
 		</span>
 
 		<h1>Ändra poäng</h1>
-		<form:form commandName="selectedstation" method="GET"
+		<form:form modelAttribute="selectedstation" method="GET"
 			action="${pageContext.request.contextPath}/correctscore/selectstation"
 			cssClass="form-general">
 			<div class="form-box">

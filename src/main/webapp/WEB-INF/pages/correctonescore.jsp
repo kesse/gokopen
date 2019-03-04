@@ -23,7 +23,7 @@
 				src="${pageContext.request.contextPath}/css/back2.png"></a>
 		</span>
 		<h1>Ändra poäng för ${score.station.stationName }</h1>
-		<form:form commandName="score" method="post" action="${pageContext.request.contextPath}/correctscore/save" cssClass="form-general">
+		<form:form modelAttribute="score" method="post" action="${pageContext.request.contextPath}/correctscore/save" cssClass="form-general">
 			<form:hidden path="scoreId" id="scoreId" />
 			<form:hidden path="patrol.patrolId" id="patrol.patrolId" />
 			<form:hidden path="station.stationId" id="station.stationId" />

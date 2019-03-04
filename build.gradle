@@ -1,18 +1,10 @@
-buildscript {
-	ext {
-		springBootVersion = '2.0.5.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+plugins {
+	id 'org.springframework.boot' version '2.1.3.RELEASE'
+	id 'java'
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'se.gokopen'
@@ -24,19 +16,19 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-web')
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
-	compile('javax.servlet:jstl')
-	compile('org.springframework.security:spring-security-taglibs')
+	implementation('org.apache.tomcat.embed:tomcat-embed-jasper')
+	implementation('javax.servlet:jstl')
+	implementation('org.springframework.security:spring-security-taglibs')
 
-	compile('org.jsoup:jsoup:1.11.3')
+	implementation('org.jsoup:jsoup:1.11.3')
 
 	runtime('mysql:mysql-connector-java')
 
 	testRuntime('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
 }

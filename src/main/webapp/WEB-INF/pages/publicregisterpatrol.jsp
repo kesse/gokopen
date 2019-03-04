@@ -37,7 +37,7 @@
 
 </div> 
 </div>
-	<form:form commandName="patrol" method="post"
+	<form:form modelAttribute="patrol" method="post"
 		action="${pageContext.request.contextPath}/register" htmlEscape="true"
 		cssClass="form-general">
 		<form:hidden path="patrolId" id="patrolId" />

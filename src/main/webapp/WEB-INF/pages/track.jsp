@@ -11,7 +11,7 @@
 <body>
 	<div class="nav-box">
 	<h1>Klass</h1>
-		<form:form commandName="track" method="post"
+		<form:form modelAttribute="track" method="post"
 			action="${pageContext.request.contextPath}/admin/track">
 			<form:hidden path="trackId" id="trackId" />
 			<div class="form-box">
