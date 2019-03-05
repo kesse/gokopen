@@ -2,9 +2,8 @@ package se.gokopen.controller;
 
 import java.beans.PropertyEditorSupport;
 
-
-import se.gokopen.dao.TrackNotFoundException;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.TrackNotFoundException;
 import se.gokopen.service.TrackService;
 
 public class TrackEditor extends PropertyEditorSupport {
@@ -18,7 +17,7 @@ public class TrackEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
-        Track track = null;
+        TrackEntity track = null;
         try {
             track = trackService.getTrackById(Integer.parseInt(text));
         } catch (TrackNotFoundException e) {
@@ -29,7 +28,7 @@ public class TrackEditor extends PropertyEditorSupport {
 
     @Override
     public String getAsText() {
-        Track track = (Track) getValue();
+        TrackEntity track = (TrackEntity) getValue();
         if (track == null) {
             return null;
         } else {

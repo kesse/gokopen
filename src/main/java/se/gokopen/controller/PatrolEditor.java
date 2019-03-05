@@ -2,8 +2,8 @@ package se.gokopen.controller;
 
 import java.beans.PropertyEditorSupport;
 
-import se.gokopen.dao.PatrolNotFoundException;
-import se.gokopen.model.Patrol;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
 import se.gokopen.service.PatrolService;
 
 public class PatrolEditor extends PropertyEditorSupport {
@@ -17,7 +17,7 @@ public class PatrolEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
-        Patrol patrol = null;
+        PatrolEntity patrol = null;
         try {
             patrol = patrolService.getPatrolById(Integer.parseInt(text));
         } catch (PatrolNotFoundException e) {
@@ -28,7 +28,7 @@ public class PatrolEditor extends PropertyEditorSupport {
 
     @Override
     public String getAsText() {
-        Patrol patrol = (Patrol) getValue();
+        PatrolEntity patrol = (PatrolEntity) getValue();
         if (patrol == null) {
             return null;
         } else {

@@ -26,7 +26,7 @@
 			</c:if>
 		</div>
 	</div>
-	<form:form commandName="patrol" method="post"
+	<form:form modelAttribute="patrol" method="post"
 		action="${pageContext.request.contextPath}/patrol"
 		cssClass="form-general">
 		<form:hidden path="patrolId" id="patrolId" />

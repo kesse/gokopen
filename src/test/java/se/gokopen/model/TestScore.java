@@ -1,63 +1,67 @@
 package se.gokopen.model;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.Test;
 
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.ScoreEntity;
+import se.gokopen.persistence.entity.StationEntity;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
 public class TestScore {
-    
+
     @Test
     public void should_calculate_score_for_patrol() {
-        Patrol patrol = new Patrol();
+        PatrolEntity patrol = new PatrolEntity();
         patrol.setPatrolName("Eriks patrull");
-        
-        Station station1 = new Station();
+
+        StationEntity station1 = new StationEntity();
         station1.setMaxScore(10);
         station1.setMinScore(0);
         station1.setStationName("Station 1");
         station1.setStationNumber(1);
-        
-        Station station2 = new Station();
+
+        StationEntity station2 = new StationEntity();
         station2.setStationName("Station 2 - waypoint");
         station2.setStationNumber(2);
         station2.setWaypoint(true);
-        
-        Station station3 = new Station();
+
+        StationEntity station3 = new StationEntity();
         station3.setStationName("Station 3");
         station3.setStationNumber(3);
         station3.setMaxScore(10);
         station3.setMinScore(0);
-        
-        Set<Score> scores = new LinkedHashSet<Score>();
-        
-        Score score1 = new Score();
+
+        Set<ScoreEntity> scores = new LinkedHashSet<ScoreEntity>();
+
+        ScoreEntity score1 = new ScoreEntity();
         score1.setScorePoint(5);
         score1.setStation(station1);
         score1.setPatrol(patrol);
         score1.setStylePoint(1);
         scores.add(score1);
-        
-        Score score2 = new Score();
+
+        ScoreEntity score2 = new ScoreEntity();
         score2.setPatrol(patrol);
         score2.setStation(station2);
         score2.setVisitedWaypoint(true);
         scores.add(score2);
-        
-        Score score3 = new Score();
+
+        ScoreEntity score3 = new ScoreEntity();
         score3.setPatrol(patrol);
         score3.setStation(station3);
         score3.setScorePoint(6);
         score3.setStylePoint(1);
         scores.add(score3);
-        
+
         patrol.setScores(scores);
-        
-        assertThat(patrol.getTotalScore(),equalTo(13));
-        assertThat(patrol.getTotalReportedStations(),equalTo(3));
+
+        assertThat(patrol.getTotalScore(), equalTo(13));
+        assertThat(patrol.getTotalReportedStations(), equalTo(3));
 
     }
 }

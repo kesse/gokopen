@@ -1,0 +1,21 @@
+spring.jpa.hibernate.ddl-auto: create-drop
+spring.datasource:
+  driver-class-name: org.h2.Driver
+  url: jdbc:h2:mem:gokopen;DB_CLOSE_DELAY=-1
+  username: sa
+  password: sa
+  tomcat:
+    testWhileIdle: true
+    testOnBorrow: true
+    validationQuery: /* ping */ SELECT 1
+
+spring.jpa.properties.hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+# Disable default endpoints
+endpoints:
+  enabled: false
+  info.enabled: true
+  health.enabled: true
+
+spring.mvc.view:
+  prefix: /WEB-INF/pages/
+  suffix: .jsp

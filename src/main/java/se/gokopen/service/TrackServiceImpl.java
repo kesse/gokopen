@@ -1,50 +1,61 @@
 package se.gokopen.service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.dao.TrackDAO;
-import se.gokopen.dao.TrackNotFoundException;
-import se.gokopen.dao.TrackNotSavedException;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.TrackNotFoundException;
+import se.gokopen.persistence.repository.TrackRepository;
 
 @Service
 public class TrackServiceImpl implements TrackService {
 
-	@Autowired
-	private TrackDAO trackDao;
-	
-	@Override
-	@Transactional
-	public void saveTrack(Track track) throws TrackNotSavedException {
-		trackDao.save(track);
-	}
+    @Autowired
+    private TrackRepository trackRepository;
 
-	@Override
-	@Transactional
-	public List<Track> getAllTracks() {
-		return trackDao.getAllTracks();
-	}
+    @Override
+    @Transactional
+    public void saveTrack(TrackEntity track) {
+        trackRepository.save(track);
+    }
 
-	@Override
-	@Transactional
-	public void deleteTrack(Track track) throws TrackNotFoundException {
-		trackDao.delete(track);
-	}
+    @Override
+    @Transactional
+    public List<TrackEntity> getAllTracks() {
 
-	@Override
-	@Transactional
-	public void deleteTrackById(Integer id) throws TrackNotFoundException {
-		trackDao.deleteId(id);
-	}
+        return StreamSupport.stream(trackRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	@Transactional
-	public Track getTrackById(Integer id) throws TrackNotFoundException {
-		return trackDao.getById(id);
-	}
+    @Override
+    @Transactional
+    public void deleteTrack(TrackEntity track) {
+        trackRepository.delete(track);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTrackById(Integer id) {
+        trackRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public TrackEntity getTrackById(Integer id) throws TrackNotFoundException {
+
+        Optional<TrackEntity> track = trackRepository.findById(id);
+
+        if (!track.isPresent()) {
+            throw new TrackNotFoundException("Hittar inte spåret med id: " + id);
+        }
+
+        return track.get();
+    }
 
 }

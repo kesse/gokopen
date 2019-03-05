@@ -1,180 +1,160 @@
 package se.gokopen.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.dao.PatrolDAO;
-import se.gokopen.dao.PatrolNotFoundException;
-import se.gokopen.dao.PatrolNotSavedException;
-import se.gokopen.model.Patrol;
-import se.gokopen.model.Score;
-import se.gokopen.model.Station;
 import se.gokopen.model.Status;
-import se.gokopen.model.Track;
+import se.gokopen.persistence.entity.PatrolEntity;
+import se.gokopen.persistence.entity.StationEntity;
+import se.gokopen.persistence.entity.TrackEntity;
+import se.gokopen.persistence.exception.PatrolNotFoundException;
+import se.gokopen.persistence.exception.PatrolNotSavedException;
+import se.gokopen.persistence.repository.PatrolRepository;
 
 @Service
 public class PatrolServiceImpl implements PatrolService {
 
+    private static List<Status> activeStatuses = Arrays.asList(Status.REGISTERED, Status.ACTIVE, Status.FINISHED);
+
     @Autowired
-    private PatrolDAO patrolDao;
+    private PatrolRepository patrolRepository;
 
     @Override
     @Transactional
-    public void savePatrol(Patrol patrol) throws PatrolNotSavedException {
-        if(isNewPatrol(patrol)) {
-            Date registered = new Date();
-            patrol.setDateRegistered(registered);
-        }
-        patrolDao.save(patrol);
-    }
+    public void savePatrol(PatrolEntity patrol) throws PatrolNotSavedException {
 
-    private boolean isNewPatrol(Patrol patrol) {
-        if(patrol.getPatrolId()==null || patrol.getPatrolId()==0) {
-            return true;
-        }else {
-            return false;
+        try {
+            patrolRepository.save(patrol);
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace();
+            throw new PatrolNotSavedException(e.getMessage());
         }
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrols() {
-        return patrolDao.getAllPatrols();
+    public List<PatrolEntity> getAllPatrols() {
+        return StreamSupport.stream(patrolRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public void deletePatrol(Patrol patrol) throws PatrolNotFoundException {
-        patrolDao.delete(patrol);
-
+    public void deletePatrol(PatrolEntity patrol) {
+        patrolRepository.delete(patrol);
     }
 
     @Override
     @Transactional
-    public void deletePatrolById(Integer id) throws PatrolNotFoundException {
-        patrolDao.deleteById(id);
-
+    public void deletePatrolById(Integer id) {
+        patrolRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public Patrol getPatrolById(Integer id) throws PatrolNotFoundException {
-        return patrolDao.getById(id);
-    }
+    public PatrolEntity getPatrolById(Integer id) throws PatrolNotFoundException {
+        Optional<PatrolEntity> patrol = patrolRepository.findById(id);
 
+        if (!patrol.isPresent()) {
+            throw new PatrolNotFoundException("Hittar inte patrullen med id: " + id);
+        }
+
+        return patrol.get();
+    }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsByTrackId(Integer trackId) {
-        return patrolDao.getPatrolsByTrackId(trackId);
-    }
-    @Override
-    @Transactional
-    public List<Patrol> getAllPatrolsByTrack(Track track) {
-        List<Patrol> patrols = patrolDao.getPatrolsByTrack(track);
+    public List<PatrolEntity> getAllPatrolsByTrack(TrackEntity track) {
+        List<PatrolEntity> patrols = patrolRepository.findAllByTrack(track);
         Collections.sort(patrols); //sorterar efter högst poäng (standardsortering för patrolsklassen)
         return patrols;
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsLeftOnStation(Integer stationId) {
-        List<Patrol> allPatrols = patrolDao.getAllPatrols();
+    public List<PatrolEntity> getAllPatrolsLeftOnStation(Integer stationId) {
+        List<PatrolEntity> allPatrols = getAllPatrols();
 
-        Iterator<Patrol> itt = allPatrols.iterator();
-        while(itt.hasNext()){
-            Patrol patrol = (Patrol) itt.next();
-            Iterator<Score> scores = patrol.getScores().iterator();
-            while(scores.hasNext()){
-                Score score = scores.next();
-                if(score.getStation().getStationId()==stationId){
-                    itt.remove();
-                    break;
-                }
-            }
-        }
-
-        return allPatrols;
+        return allPatrols.stream()
+                .filter(p -> p.getScores().stream()
+                            .noneMatch(s -> s.getStation().getStationId().equals(stationId))
+                )
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsSortedByStatus() {
-        return patrolDao.getAllPatrolsSortedByStatus();
+    public List<PatrolEntity> getAllActivePatrolsLeftOnStation(Integer stationId) {
+        List<PatrolEntity> patrols = getAllPatrolsLeftOnStation(stationId);
+
+        return patrols.stream()
+                .filter(p -> p.getStatus() != null && activeStatuses.contains(p.getStatus()))
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsSortedByTroop() {
-        return patrolDao.getAllPatrolsSortedByTroop();
+    public List<PatrolEntity> getAllPatrolsSortedByStatus() {
+        return patrolRepository.findAllByOrderByStatus();
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsSortedByNumberOfStations() {
-        List<Patrol> patrols = patrolDao.getAllPatrols();
+    public List<PatrolEntity> getAllPatrolsSortedByTroop() {
+        return patrolRepository.findAllByOrderByTroop();
+    }
+
+    @Override
+    @Transactional
+    public List<PatrolEntity> getAllPatrolsSortedByNumberOfStations() {
+        List<PatrolEntity> patrols = getAllPatrols();
         Collections.sort(patrols, new BeanComparator("totalReportedStations"));
         return patrols;
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsSortedByTrack() {
-        List<Patrol> patrols = patrolDao.getAllPatrolsSortedByTrack();
-        return patrols;
+    public List<PatrolEntity> getAllPatrolsSortedByTrack() {
+        return patrolRepository.findAllByOrderByTrack();
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsSortedByScore() {
-        List<Patrol> patrols = patrolDao.getAllPatrols();
+    public List<PatrolEntity> getAllPatrolsSortedByScore() {
+        List<PatrolEntity> patrols = getAllPatrols();
         Collections.sort(patrols, Collections.reverseOrder(new BeanComparator("totalScore")));
         return patrols;
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllActivePatrolsLeftOnStation(Integer stationId) {
-        List<Patrol> patrols = getAllPatrolsLeftOnStation(stationId);
-        List<Patrol> activePatrols = getActiveAndWaitingPatolsFromList(patrols);
-        return activePatrols;
+    public List<PatrolEntity> getAllPatrolsCriteria() {
+        return getAllPatrols();
     }
 
-    public List<Patrol> getActiveAndWaitingPatolsFromList(List<Patrol> patrols) {
-        List<Patrol> onlyActivePatrols = new ArrayList<Patrol>();
-        for(Patrol patrol:patrols){
-            if(patrol.getStatus()!=null && (patrol.getStatus().equals(Status.REGISTERED) || patrol.getStatus().equals(Status.ACTIVE) || patrol.getStatus().equals(Status.FINISHED) )){
-                onlyActivePatrols.add(patrol);
-            }
+    @Override
+    @Transactional
+    public void saveAllpatrols(List<PatrolEntity> patrols) throws PatrolNotSavedException {
+        try {
+            patrolRepository.saveAll(patrols);
+        } catch (ConstraintViolationException e) {
+            e.printStackTrace();
+            throw new PatrolNotSavedException(e.getMessage());
         }
-        return onlyActivePatrols;
     }
 
     @Override
     @Transactional
-    public List<Patrol> getAllPatrolsCriteria() {
-        return patrolDao.getAllPatrols();
-    }
-
-    @Override
-    @Transactional
-    public void saveAllpatrols(List<Patrol> patrols) throws PatrolNotSavedException {
-        for(Patrol patrol:patrols){
-            this.savePatrol(patrol);
-        }
-
-    }
-
-    @Override
-    @Transactional
-    public List<Patrol> getAllPatrolsByStartStation(Station station) {
-        return patrolDao.getAllPatrolsByStartStation(station);
+    public List<PatrolEntity> getAllPatrolsByStartStation(StationEntity station) {
+        return patrolRepository.findAllByStartStation(station);
     }
 }

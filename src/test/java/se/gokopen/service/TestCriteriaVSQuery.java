@@ -2,42 +2,33 @@ package se.gokopen.service;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.gokopen.dao.PatrolDAO;
-import se.gokopen.model.Patrol;
+import se.gokopen.SpringBootTestBase;
+import se.gokopen.persistence.entity.PatrolEntity;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/mvc-dispatcher-servlet.xml"})
+public class TestCriteriaVSQuery extends SpringBootTestBase {
 
-public class TestCriteriaVSQuery {
-    
     @Autowired
-    PatrolService patrolService;
-    
-    @Ignore
+    private PatrolService patrolService;
+
     @Test
-    public void shouldReturnTheSameResults(){
-        
+    public void shouldReturnTheSameResults() {
+
         long startCriteria = System.currentTimeMillis();
-        List<Patrol> patrolsCriteria = patrolService.getAllPatrolsCriteria();
+        List<PatrolEntity> patrolsCriteria = patrolService.getAllPatrolsCriteria();
         long stopCriteria = System.currentTimeMillis();
         long startQuery = System.currentTimeMillis();
-        List<Patrol> patrolsQuery = patrolService.getAllPatrols();
+        List<PatrolEntity> patrolsQuery = patrolService.getAllPatrols();
         long stopQuery = System.currentTimeMillis();
-        
-        
+
+
         long totalQuery = stopQuery - startQuery;
         long totalCriteria = stopCriteria - startCriteria;
-        
+
         System.out.println("query time: " + totalQuery + " " + patrolsQuery.size());
         System.out.println("criteria time: " + totalCriteria + " " + patrolsCriteria.size());
-        
     }
 
 }

@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<c:if test="${not empty score.station }">
-		<form:form commandName="score" method="post"
+		<form:form modelAttribute="score" method="post"
 			action="${pageContext.request.contextPath}/score/savescorefrompatrol"
 			cssClass="form-general">
 			<form:hidden path="scoreId" id="scoreId" />

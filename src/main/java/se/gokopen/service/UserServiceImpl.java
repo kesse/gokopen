@@ -1,65 +1,54 @@
 package se.gokopen.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import se.gokopen.dao.UserDao;
-import se.gokopen.dao.UserNotFoundException;
-import se.gokopen.model.User;
+import se.gokopen.persistence.entity.UserEntity;
+import se.gokopen.persistence.exception.UserNotFoundException;
+import se.gokopen.persistence.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao userDao;
-    
-    @Override
-    @Transactional
-    public User getUser(String username) throws UserNotFoundException {
-        return userDao.getUserByName(username);
-    }
+    private UserRepository userRepository;
 
     @Override
-    public void deleteUser(User user) {
-        userDao.deleteUser(user);
-
-    }
-
-    @Override
-    public void deleteUserByUsername(String username) throws UserNotFoundException {
-            User delUser = getUser(username);
-            userDao.deleteUser(delUser);
-        
-
-    }
-
-    @Override
-    public void saveUser(User user) {
-        userDao.saveUser(user);
-
-    }
-
-    @Override
-    @Transactional
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
-    }
-
-    @Override
-    @Transactional
-    public User getUserById(Integer id) throws UserNotFoundException {
-        return userDao.getUserById(id);
-
+    public void deleteUser(UserEntity user) {
+        userRepository.delete(user);
     }
 
     @Override
     @Transactional
     public void deleteUserById(int id) throws UserNotFoundException {
-        User user = userDao.getUserById(id);
-        deleteUser(user);
+        userRepository.deleteById(id);
     }
+
+    @Override
+    public void saveUser(UserEntity user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAllByOrderByUsername();
+    }
+
+    @Override
+    @Transactional
+    public UserEntity getUserById(Integer id) throws UserNotFoundException {
+        Optional<UserEntity> user = userRepository.findById(id);
+
+        if (!user.isPresent()) {
+            throw new UserNotFoundException("Hittar inte användaren med id " + id);
+        }
+
+        return user.get();
+    }
+
 }

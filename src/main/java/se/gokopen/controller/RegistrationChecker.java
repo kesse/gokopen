@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import se.gokopen.model.Config;
+import se.gokopen.persistence.entity.ConfigEntity;
 
 public class RegistrationChecker {
 
@@ -12,23 +12,23 @@ public class RegistrationChecker {
         // TODO Auto-generated constructor stub
     }
 
-    public static boolean isOpenForRegistration(Config config, int noOfRegisteredPatrolsNow) {
+    public static boolean isOpenForRegistration(ConfigEntity config, int noOfRegisteredPatrolsNow) {
         try {
             int maxPatrols;
             boolean allowRegistration = false;
-            
-            if(null==config.getMaxPatrols()) {
+
+            if (null == config.getMaxPatrols()) {
                 maxPatrols = 0;
-            }else {
+            } else {
                 maxPatrols = config.getMaxPatrols();
             }
-            if(null != config.getAllowPublicRegistration()) {
+            if (null != config.getAllowPublicRegistration()) {
                 allowRegistration = config.getAllowPublicRegistration();
             }
-            
-            if(null == config.getLastRegisterDay()) {
+
+            if (null == config.getLastRegisterDay()) {
                 return allowRegistration && isItSeatsLeft(maxPatrols, noOfRegisteredPatrolsNow);
-            }else {
+            } else {
                 return allowRegistration && checkDate(config.getLastRegisterDay()) && isItSeatsLeft(maxPatrols, noOfRegisteredPatrolsNow);
             }
 //            if (allowRegistration && checkDate(config.getLastRegisterDay()) && isItSeatsLeft(maxPatrols, noOfRegisteredPatrolsNow)) {
@@ -47,24 +47,24 @@ public class RegistrationChecker {
         String today = sdf.format(new Date());
         Date lastDate = sdf.parse(lastRegister);
         Date todayDate = sdf.parse(today);
-        
-         if(lastDate.after(todayDate)) {
+
+        if (lastDate.after(todayDate)) {
             return true;
         }
-        if(lastDate.before(todayDate)) {
+        if (lastDate.before(todayDate)) {
             return false;
         }
-        if(lastDate.equals(todayDate)) {
+        if (lastDate.equals(todayDate)) {
             return true;
         }
         return false;
     }
-    
+
     private static boolean isItSeatsLeft(int maxSeats, int registeredPatrolsNow) {
-        if(maxSeats==0) {
+        if (maxSeats == 0) {
             return true;
         }
-        if(maxSeats > registeredPatrolsNow) {
+        if (maxSeats > registeredPatrolsNow) {
             return true;
         }
         return false;

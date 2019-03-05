@@ -10,7 +10,7 @@
 <body>
 <div class="nav-box">
 <h1>Kontroll</h1>
-<form:form commandName="station" method="post" action="${pageContext.request.contextPath}/admin/station" cssClass="form-general">
+<form:form modelAttribute="station" method="post" action="${pageContext.request.contextPath}/admin/station" cssClass="form-general">
 <form:hidden path="stationId" id="stationId"/>
 
 <div class="form-box">
